@@ -30,17 +30,57 @@
           </template>
 
           <template slot="end">
-              <b-navbar-item tag="div">
+              <b-navbar-dropdown :label="username" v-if="isLoggedIn">
+                  <b-navbar-item href="#">
+                      About
+                  </b-navbar-item>
+                  <b-navbar-item href="#">
+                      Contact
+                  </b-navbar-item>
+                  <b-navbar-item @click="logout">
+                      Se déconnecter
+                  </b-navbar-item>
+              </b-navbar-dropdown>
+              <b-navbar-item tag="div" v-else>
                   <div class="buttons">
-                      <a class="button is-dark">
+                      <router-link :to="{name: 'Register'}" class="button is-dark">
                           <strong>Inscription</strong>
-                      </a>
-                      <a class="button">
+                      </router-link>
+                      <router-link :to="{name: 'Login'}" class="button">
                           Connexion
-                      </a>
+                      </router-link>
                   </div>
               </b-navbar-item>
           </template>
       </b-navbar>
   </div>
 </template>
+
+<script>
+    export default {
+        name: "Header",
+        data() {
+            return {
+                username: null
+            }
+        },
+        mounted() {
+            if(localStorage.getItem("user")) {
+                this.username = localStorage.getItem("user")
+            }
+        },
+        computed: {
+            isLoggedIn(){
+                return this.$store.getters.isLoggedIn
+            }
+        },
+        methods: {
+            logout: function () {
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push({path: "/"})
+                    })
+            },
+        }
+    }
+</script>

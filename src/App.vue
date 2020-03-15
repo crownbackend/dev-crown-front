@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="Site">
-    <Header/>
+    <Header :key="$route.fullPath" />
     <main class="Site-content">
       <router-view></router-view>
     </main>
@@ -35,6 +35,21 @@
 }
 .Site-content {
   flex: 1;
+}
+
+.cursor {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.error {
+  padding: 0.8rem;
+  margin-top: 0.8rem;
+  display: block;
+  background: #ef2e55;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: #fff;
 }
 
 </style>
