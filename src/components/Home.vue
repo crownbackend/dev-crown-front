@@ -207,6 +207,7 @@
                     {"resolve": 0, "forum": "SQL", "subject": "Jointure de rêquete ?"},
                     {"resolve": 0, "forum": "HTML", "subject": "H1 question ?"},
                     {"resolve": 0, "forum": "CSS", "subject": "Color"},
+                    {"resolve": 1, "forum": "CSS", "subject": "Color"},
                 ]
             }
         }
