@@ -16,7 +16,7 @@
                         <p class="help is-danger">{{error}}</p>
                     </div>
                     <div class="field">
-                        <button class="button is-primary is-fullwidth" :disabled="disabled" v-bind:class="clickable">
+                        <button class="button is-primary is-fullwidth" :class="{'cursor': !formValid}" :disabled="!formValid">
                             Réinitialiser le mot de passe
                         </button>
                     </div>
@@ -58,11 +58,10 @@
           return {
               email: null,
               error: null,
-              clickable: "no-click is-disabled",
-              disabled: true,
               formEmpty: true,
               afterSuccess: false,
-              afterFailed: false
+              afterFailed: false,
+              formValid: false
           }
         },
         methods: {
@@ -84,17 +83,14 @@
             },
             verifyEmail() {
                 if(this.validEmail(this.email)) {
-                    this.disabled = false
-                    this.clickable = ""
+                    this.formValid = true
                     this.error = null
                 } else if(this.email.length === 0) {
                     this.error = "Veuillez saisir une adresse email.\n"
-                    this.disabled = true
-                    this.clickable = "no-click is-disabled"
+                    this.formValid = false
                 } else {
-                    this.disabled = true
-                    this.clickable = "no-click is-disabled"
                     this.error = "Vérifiez l'adresse email, son format n'est pas valide.\n"
+                    this.formValid = false
                 }
             },
 

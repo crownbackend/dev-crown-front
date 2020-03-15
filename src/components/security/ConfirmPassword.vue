@@ -23,7 +23,7 @@
             <p class="subtitle is-3">
                 Votre mot de passe à été changer avec success.
                 <br>
-                Vous pouvez vous maintenant vous connecté <router-link :to="{name: 'login'}">juste ici</router-link>
+                Vous pouvez vous maintenant vous connecté <router-link :to="{name: 'Login'}">juste ici</router-link>
             </p>
         </div>
         <div v-if="afterError">

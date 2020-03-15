@@ -32,6 +32,21 @@ class UserApi {
         //this.token = token
         return axios.get(Vue.prototype.$hostName+"/check/login/verify/token")
     }
+
+    sendNewPassword(email) {
+        this.email = email
+        const formData = new FormData();
+        formData.append("email", email)
+        return axios.post(Vue.prototype.$hostName+"/forgot/password", formData)
+    }
+
+    changePassword(token, password) {
+        this.token = token
+        this.password = password
+        const formData = new FormData();
+        formData.append("password", password)
+        return axios.post(Vue.prototype.$hostName+"/forgot/password/"+token, formData)
+    }
 }
 
 export default new UserApi();
