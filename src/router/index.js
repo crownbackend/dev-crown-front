@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from "../components/Home";
+import Home from "../components/Home"
 import store from "../store/index"
-import UserApi from "../services/UserApi";
+import UserApi from "../services/UserApi"
 
 Vue.use(VueRouter)
 
 const video = () => import('../components/video/Video')
+const showVideo = () => import("../components/video/Show")
 const article = () => import("../components/blog/Article")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
@@ -79,6 +80,11 @@ const routes = [
     meta: {
       title: "Le Blog"
     }
+  },
+  {
+    path: "/videos/:slug/:id",
+    name: "videoShow",
+    component: showVideo
   }
 ]
 

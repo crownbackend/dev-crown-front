@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
     "buefy": "^0.8.13",
     "core-js": "^3.6.4",
     "moment": "^2.24.0",

@@ -27,8 +27,10 @@
               <b-navbar-item href="#">
                   Forum
               </b-navbar-item>
+              <b-navbar-item href="#">
+                  Playliste
+              </b-navbar-item>
           </template>
-
           <template slot="end">
               <b-navbar-dropdown :label="username" v-if="isLoggedIn">
                   <b-navbar-item href="#">

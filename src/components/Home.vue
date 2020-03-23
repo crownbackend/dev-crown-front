@@ -10,14 +10,14 @@
             <div class="title is-3">
                 Les dernières vidéos
             </div>
-            <div class="columns">
-                <div class="column" v-for="video in videos" v-bind:key="video.id">
+            <div class="row">
+                <div class="col-md-4" v-for="video in videos" v-bind:key="video.id">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <a href="">
+                                <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                     <img v-bind:src="getImageUrl(video.imageFile, 'videos')" :alt="video.imageFile">
-                                </a>
+                                </router-link>
                             </figure>
                         </div>
                         <div class="card-content">
@@ -34,11 +34,11 @@
                                         </a>
                                     </p>
                                     <br>
-                                    <a href="">
+                                    <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                         <p class="title is-4">
                                             {{video.title}}
                                         </p>
-                                    </a>
+                                    </router-link>>
                                     <p class="subtitle is-6">Dev-crown</p>
                                 </div>
                             </div>
@@ -61,8 +61,8 @@
             <div class="title is-3">
                 Le blog
             </div>
-            <div class="columns">
-                <div class="column" v-for="article in articles" v-bind:key="article.id">
+            <div class="row">
+                <div class="col-md-4" v-for="article in articles" v-bind:key="article.id">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
@@ -160,11 +160,10 @@
 
             ForumApi.getLastTopic()
                 .then(response => {
-                    console.log(response)
                     this.topics = response.data.topics
                 })
-            .catch(err => {
-                console.log(err)
+            .catch(() => {
+                alert('Erreur serveur !')
             })
         },
         methods: {

@@ -10,15 +10,14 @@
             <div class="title is-3">
                 Les dernières vidéos
             </div>
-            <div class="columns" v-for="i in videosGroups" v-bind:key="i">
-                <div class="column" v-for="video in videos.slice(i * itemsPerRow, (i + 1) * itemsPerRow)" v-bind:key="video.id">
-                    <div class="column">
-                        <div class="card">
+            <div class="row" v-for="i in videosGroups" v-bind:key="i">
+                <div class="col-md-4" v-for="video in videos.slice(i * itemsPerRow, (i + 1) * itemsPerRow)" v-bind:key="video.id">
+                    <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
-                                    <a href="">
+                                    <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                         <img v-bind:src="getImageUrl(video.imageFile)" :alt="video.imageFile">
-                                    </a>
+                                    </router-link>>
                                 </figure>
                             </div>
                             <div class="card-content">
@@ -29,11 +28,11 @@
                                         </p>
                                         <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
                                         <br>
-                                        <a href="">
+                                        <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                             <p class="title is-4">
                                                 {{video.title}}
                                             </p>
-                                        </a>
+                                        </router-link>>
                                         <br>
                                         <p class="subtitle is-6">Dev-crown</p>
                                     </div>
@@ -48,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <hr>
                 </div>
             </div>
         </div>
