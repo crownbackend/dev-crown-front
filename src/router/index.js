@@ -6,7 +6,8 @@ import UserApi from "../services/UserApi";
 
 Vue.use(VueRouter)
 
-const video = () => import('../components/Video')
+const video = () => import('../components/video/Video')
+const article = () => import("../components/blog/Article")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
 const login = () => import('../components/security/Login')
@@ -71,6 +72,14 @@ const routes = [
       title: "Récupération de mot de passe"
     }
   },
+  {
+    path: "/blog",
+    name: "Article",
+    component: article,
+    meta: {
+      title: "Le Blog"
+    }
+  }
 ]
 
 const router = new VueRouter({

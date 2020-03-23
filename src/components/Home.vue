@@ -11,74 +11,44 @@
                 Les dernières vidéos
             </div>
             <div class="columns">
-                <div class="column">
+                <div class="column" v-for="video in videos" v-bind:key="video.id">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
+                                <a href="">
+                                    <img v-bind:src="getImageUrl(video.imageFile, 'videos')" :alt="video.imageFile">
+                                </a>
                             </figure>
                         </div>
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <p class="title is-4">symfony 5 présentation du projet</p>
+                                    <p style="float: right" v-if="video.technology">
+                                        <a href="">
+                                            <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                        </a>
+                                    </p>
+                                    <p v-if="video.playliste">Playliste :
+                                        <a href="">
+                                            {{video.playliste.name}}
+                                        </a>
+                                    </p>
+                                    <br>
+                                    <a href="">
+                                        <p class="title is-4">
+                                            {{video.title}}
+                                        </p>
+                                    </a>
                                     <p class="subtitle is-6">Dev-crown</p>
                                 </div>
                             </div>
 
                             <div class="content">
-                                Bonjour à tous dans cette vidéo nous allons voir comment utiliser les formulaires avec doctrine !
-
+                                <p v-html="video.description.slice(0, 80)">
+                                    ...
+                                </p>
                                 <br>
-                                <time datetime="2016-1-1">13/03/2020</time>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4">symfony 5 présentation du projet</p>
-                                    <p class="subtitle is-6">Dev-crown</p>
-                                </div>
-                            </div>
-
-                            <div class="content">
-                                Bonjour à tous dans cette vidéo nous allons voir comment utiliser les formulaires avec doctrine !
-
-                                <br>
-                                <time datetime="2016-1-1">13/03/2020</time>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4">symfony 5 présentation du projet</p>
-                                    <p class="subtitle is-6">Dev-crown</p>
-                                </div>
-                            </div>
-
-                            <div class="content">
-                                Bonjour à tous dans cette vidéo nous allons voir comment utiliser les formulaires avec doctrine !
-
-                                <br>
-                                <time datetime="2016-1-1">13/03/2020</time>
+                                <time datetime="2016-1-1">{{video.publishedAt | formatDate}}</time>
                             </div>
                         </div>
                     </div>
@@ -92,60 +62,22 @@
                 Le blog
             </div>
             <div class="columns">
-                <div class="column">
+                <div class="column" v-for="article in articles" v-bind:key="article.id">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
+                                <a href="">
+                                    <img v-bind:src="getImageUrl(article.imageFile, 'articles')" :alt="article.imageFile">
+                                </a>
                             </figure>
                         </div>
                         <br>
-                        <time datetime="2016-1-1">13/03/2020</time>
+                        <time datetime="2016-1-1">{{article.publishedAt | formatDate}}</time>
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
                                     <p class="title is-4 has-text-centered">
-                                        PHP est il amener a mourir ?
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <br>
-                        <time datetime="2016-1-1">13/03/2020</time>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4 has-text-centered">
-                                        PHP est il amener a mourir ?
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="https://picsum.photos/1280/960" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <br>
-                        <time datetime="2016-1-1">13/03/2020</time>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4 has-text-centered">
-                                        PHP est il amener a mourir ?
+                                       {{article.title}}
                                     </p>
                                 </div>
                             </div>
@@ -155,7 +87,6 @@
             </div>
         </div>
         <br>
-
 
         <div class="has-text-centered">
             <div class="title is-3">
@@ -170,8 +101,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                   <tr v-for="data in datas" v-bind:key="data.subject">
-                       <td v-if="data.resolve === 1">
+                   <tr v-for="topic in topics" v-bind:key="topic.id">
+                       <td v-if="topic.resolve == 1">
                            <i class="fas fa-check-circle"></i>
                        </td>
                        <td v-else>
@@ -179,12 +110,12 @@
                        </td>
                        <td>
                            <router-link to="/">
-                            {{data.forum}}
+                               {{topic.forum.name}}
                            </router-link>
                        </td>
                        <td>
                            <router-link to="/">
-                               {{data.subject}}
+                               {{topic.title}}
                            </router-link>
                        </td>
                    </tr>
@@ -197,19 +128,58 @@
 </template>
 
 <script>
+    import VideoApi from "../services/VideoApi";
+    import moment from "moment";
+    import BlogApi from "../services/BlogApi";
+    import ForumApi from "../services/ForumApi";
+
     export default {
         name: "Home",
         data() {
             return {
-                datas: [
-                    {"resolve": 0, "forum": "javascript", "subject": "Vue js nuxt ?"},
-                    {"resolve": 1, "forum": "php", "subject": "symfony works"},
-                    {"resolve": 0, "forum": "SQL", "subject": "Jointure de rêquete ?"},
-                    {"resolve": 0, "forum": "HTML", "subject": "H1 question ?"},
-                    {"resolve": 0, "forum": "CSS", "subject": "Color"},
-                ]
+                videos: [],
+                articles: [],
+                topics: []
             }
-        }
+        },
+        mounted() {
+            VideoApi.getLastVideos()
+                .then(response => {
+                    this.videos = response.data.videos
+                })
+                .catch(() => {
+                    alert('Erreur serveur')
+                });
+            BlogApi.getLastArticles()
+                .then(response => {
+                    this.articles = response.data.articles
+                })
+                .catch(() => {
+                    alert('Erreur serveur !')
+                })
+
+            ForumApi.getLastTopic()
+                .then(response => {
+                    console.log(response)
+                    this.topics = response.data.topics
+                })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+        methods: {
+            getImageUrl(name, docs) {
+                return this.$hostImages + "/"+docs+"/" + name;
+            },
+            getImageTechnoUrl(name) {
+                return this.$hostImages + "/technology/" + name;
+            }
+        },
+        filters: {
+            formatDate(value) {
+                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+            }
+        },
     }
 </script>
 

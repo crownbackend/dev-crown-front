@@ -18,7 +18,7 @@
               <b-navbar-item tag="router-link" :to="{ name: 'Video' }">
                   Vidéos
               </b-navbar-item>
-              <b-navbar-item href="#">
+              <b-navbar-item tag="router-link" :to="{ name: 'Article' }">
                   Blog
               </b-navbar-item>
               <b-navbar-item href="#">
