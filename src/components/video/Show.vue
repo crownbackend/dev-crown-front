@@ -1,5 +1,6 @@
 <template>
     <div v-if="video" class="container">
+        <hr>
         <h1 class="has-text-centered title is-1">{{video.title}}</h1>
         <br>
         <div>
@@ -58,19 +59,97 @@
                 </div>
             </div>
         </div>
-
+        <hr>
+        <br>
+        <div v-if="isLoggedIn">
+            <form method="post" @submit.prevent="sendForm">
+                <div class="field">
+                    <label class="label">Message</label>
+                    <div class="control">
+                        <textarea v-model="comment" class="textarea" placeholder="Votre commentaire"></textarea>
+                    </div>
+                    <p class="help is-danger">{{commentError}}</p>
+                    <br>
+                    <button class="button is-primary">
+                        Ajouter
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div v-else class="download-video">
+            <p class="subtitle is-4">
+                <router-link :to="{name: 'Register'}" class="button is-dark">
+                    Inscris toi
+                </router-link>
+                ou
+                <router-link :to="{name: 'Login'}" class="button">
+                    Connecte toi
+                </router-link>
+                pour ajouter un commentaire.
+            </p>
+        </div>
+        <br>
+        <div class="title is-3">{{comments.length}} commentaires</div>
+        <div v-for="comment in comments" v-bind:key="comment.id">
+            <div class="notification comment">
+                <figure class="image img-avatar">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                </figure>
+                <div class="content-author">
+                    <strong>{{comment.user.username}}</strong>
+                    {{comment.createdAt|formatDate}},
+                    <span v-if="comment.updatedAt">
+                        Dernière modification
+                        {{comment.updatedAt|formatDate}},
+                    </span>
+                    <span class="icon-comment" @click.prevent="editComment(comment.id)">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="icon-comment">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                </div>
+                <p :id="'comment_'+comment.id">
+                    {{comment.content}}
+                </p>
+                <form @submit.prevent="sendEditComment(comment.id)" v-if="formEditComment && comment.id === idChange">
+                    <div class="field">
+                        <label class="label">Message</label>
+                        <div class="control">
+                            <textarea :value="comment.content" class="textarea" placeholder="Votre commentaire"></textarea>
+                        </div>
+                        <p class="help is-danger">{{commentError}}</p>
+                        <br>
+                        <button class="button is-primary">
+                            Editer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br>
     </div>
 </template>
 
 <script>
     import VideoApi from "../../services/VideoApi";
     import axios from "axios";
+    import CommentApi from "../../services/CommentApi";
+    import moment from "moment";
 
     export default {
         name: "Show",
         data() {
             return {
                 video: null,
+                formValid: false,
+                comment: null,
+                commentError: null,
+                sendValid: false,
+                comments: [],
+                showComment: true,
+                formEditComment: false,
+                idChange: null
             }
         },
         mounted() {
@@ -82,32 +161,86 @@
                 .catch(() => {
                     alert("Erreur serveur")
                 })
+            CommentApi.getComments(this.$route.params.id)
+            .then(response => {
+                this.comments = response.data.comments
+            })
+            .catch(() => {
+                alert("Erreur serveur !")
+            })
         },
         methods: {
+            sendForm() {
+                this.verifyComment()
+                if(this.formValid) {
+                    CommentApi.newComment(this.comment, this.$route.params.id)
+                        .then(response => {
+                            this.comments = response.data.comments
+                            this.comment = null
+                            if(response.data.comment === 1) {
+                                this.formValid = false
+                                this.commentError = "Votre commenaitre est trop court (au moins 10 caractères)"
+                            }
+                        })
+                        .catch(err => {
+                            if(err.response.status == 500) {
+                                this.$store.dispatch('logout')
+                            }
+                        })
+                }
+            },
+            editComment(id) {
+                this.idChange = id
+                this.showComment = false
+                this.formEditComment = true
+                this.$el.querySelector("#comment_"+id).innerHTML = ""
+            },
+            sendEditComment(id, content) {
+                CommentApi.editComment(id, content)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(console.error)
+            },
+            verifyComment() {
+                if(this.comment && this.comment.length < 10) {
+                    this.formValid = false
+                    this.commentError = "Votre commenaitre est trop court (au moins 10 caractères)"
+                } else if (this.comment === null){
+                    this.formValid = false
+                    this.commentError = "Votre commenaitre ne peut être vide."
+                } else {
+                    this.commentError = null
+                    this.formValid = true
+                }
+            },
             getImageUrl(name, docs) {
                 return this.$hostImages + "/"+docs+"/" + name;
             },
-            getUrlVideo(name) {
-                return this.$hostVideos + name;
-            },
             downloadVideo(name) {
-                axios({
-                    url: this.$hostVideos + name,
-                    method: 'GET',
-                    responseType: 'blob', // important
-                }).then((response) => {
-                    const url = window.URL.createObjectURL(new Blob([response.data]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'file.pdf');
-                    document.body.appendChild(link);
-                    link.click();
-                });
+                axios.post(this.$hostName+"/check/download/video", {
+                    "authorization": localStorage.getItem("token")
+                })
+                .then(response => {
+                    if(response.data.download == 1) {
+                        window.open(this.$hostName+"/file/"+name, "_blank")
+                    }
+                })
+                .catch(err => {
+                    if(err.response.status == 500) {
+                        this.$store.dispatch('logout')
+                    }
+                })
             }
         },
         computed: {
             isLoggedIn(){
                 return this.$store.getters.isLoggedIn
+            }
+        },
+        filters: {
+            formatDate(value) {
+                return moment(value).fromNow()
             }
         },
     }
@@ -132,6 +265,20 @@
 
     .download-video {
         padding-top: 10px;
+    }
+
+    .img-avatar {
+        width: 50px;
+        height: 50px;
+    }
+
+    .comment {
+        margin-bottom: 20px;
+    }
+
+    .icon-comment {
+        margin-left: 10px;
+        cursor: pointer;
     }
 
 </style>
