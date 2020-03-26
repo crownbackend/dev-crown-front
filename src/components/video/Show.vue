@@ -6,7 +6,9 @@
         <div>
             <p class="video-container" v-html="video.videoURL"></p>
         </div>
-        <div class="has-text-centered">
+        <div class="">
+            <br>
+            <span style="float: right" class="subtitle is-5">{{video.publishedAt|formatDate}}</span>
             <div v-if="isLoggedIn" class="download-video">
                 <button @click="downloadVideo(video.nameFileVideo)" class="button is-dark">
                     Télécharger la vidéo
@@ -14,7 +16,7 @@
                 </button>
             </div>
             <div v-else class="download-video">
-                <p class="subtitle is-4">
+                <p class="subtitle is-5">
                     <router-link :to="{name: 'Register'}" class="button is-dark">
                         Inscris toi
                     </router-link>
@@ -27,19 +29,19 @@
             </div>
         </div>
         <hr>
-        <div class="row">
-            <div class="col-md-1">
+        <div>
+            <span class="subtitle is-5">
                 Partager la vidéo :
-            </div>
-            <div class="col-md-1">
+            </span>
+            <span class="share">
                 <i class="fab fa-facebook-square fa-3x" style="color: #3b5998"></i>
-            </div>
-            <div class="col-md-1">
+            </span>
+            <span class="share">
                 <i class="fab fa-twitter-square fa-3x" style="color: #00acee"></i>
-            </div>
-            <div class="col-md-1">
+            </span>
+            <span class="share">
                 <i class="fas fa-envelope-square fa-3x"></i>
-            </div>
+            </span>
         </div>
         <hr>
         <div class="row">
@@ -102,23 +104,26 @@
                         Dernière modification
                         {{comment.updatedAt|formatDate}},
                     </span>
-                    <span class="icon-comment" @click.prevent="editComment(comment.id)">
-                        <i class="fas fa-edit"></i>
-                    </span>
-                    <span class="icon-comment">
-                        <i class="fas fa-trash-alt"></i>
+                    <span v-if="isLoggedIn && getUser == comment.user.id">
+                        <span class="icon-comment" @click.prevent="editComment(comment.id)">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                        <span class="icon-comment" @click.prevent="deleteComment(comment.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
                     </span>
                 </div>
-                <p :id="'comment_'+comment.id">
+                <br>
+                <p :id="'comment_'+comment.id" class="pre-formatted">
                     {{comment.content}}
                 </p>
-                <form @submit.prevent="sendEditComment(comment.id)" v-if="formEditComment && comment.id === idChange">
+                <form @submit.prevent="sendEditComment(comment.id, comment.content)" v-if="formEditComment && comment.id === idChange">
                     <div class="field">
                         <label class="label">Message</label>
                         <div class="control">
-                            <textarea :value="comment.content" class="textarea" placeholder="Votre commentaire"></textarea>
+                            <textarea v-model="comment.content" class="textarea" placeholder="Votre commentaire"></textarea>
                         </div>
-                        <p class="help is-danger">{{commentError}}</p>
+                        <p class="help is-danger">{{commentErrorEdit}}</p>
                         <br>
                         <button class="button is-primary">
                             Editer
@@ -147,9 +152,10 @@
                 commentError: null,
                 sendValid: false,
                 comments: [],
-                showComment: true,
                 formEditComment: false,
-                idChange: null
+                idChange: null,
+                commentErrorEdit: null,
+                formEdit: false
             }
         },
         mounted() {
@@ -175,11 +181,16 @@
                 if(this.formValid) {
                     CommentApi.newComment(this.comment, this.$route.params.id)
                         .then(response => {
-                            this.comments = response.data.comments
-                            this.comment = null
-                            if(response.data.comment === 1) {
+                            if(response.data.comment === 0) {
                                 this.formValid = false
                                 this.commentError = "Votre commenaitre est trop court (au moins 10 caractères)"
+                            } else {
+                                this.comments = response.data.comments
+                                this.comment = null
+                                this.$buefy.notification.open({
+                                    message: 'Commentaire ajouter !',
+                                    type: 'is-success'
+                                })
                             }
                         })
                         .catch(err => {
@@ -191,16 +202,56 @@
             },
             editComment(id) {
                 this.idChange = id
-                this.showComment = false
                 this.formEditComment = true
-                this.$el.querySelector("#comment_"+id).innerHTML = ""
+            },
+            deleteComment(id) {
+                if(confirm('Voulez vous vraiment supprimer ce commentaire ?')) {
+                    CommentApi.deleteComment(id)
+                        .then(response => {
+                            this.comments = response.data.comments
+                            this.$buefy.notification.open({
+                                message: 'Commentaire supprimer avec succées',
+                                type: 'is-success'
+                            })
+                        })
+                        .catch(err => {
+                            if(err.response.status == 500) {
+                                this.$store.dispatch('logout')
+                            }
+                        })
+                }
             },
             sendEditComment(id, content) {
-                CommentApi.editComment(id, content)
-                    .then(response => {
-                        console.log(response)
-                    })
-                    .catch(console.error)
+                this.verifyEditComment(content)
+                if(this.formEdit) {
+                    CommentApi.editComment(id, content)
+                        .then(response => {
+                            if(response.data.comment === 0) {
+                                this.commentError = "Votre commenaitre est trop court (au moins 10 caractères)"
+                            } else if(response.data.edit === 1) {
+                                this.comments = response.data.comments
+                                this.formEditComment = false
+                            }
+                        })
+                        .catch(err => {
+                            if(err.response.status == 500) {
+                                this.$store.dispatch('logout')
+                            }
+                        })
+                }
+
+            },
+            verifyEditComment(content) {
+                if(content && content.length < 10) {
+                    this.formEdit = false
+                    this.commentErrorEdit = "Votre commenaitre est trop court (au moins 10 caractères)"
+                } else if (content.length === 0){
+                    this.formEdit = false
+                    this.commentErrorEdit = "Votre commenaitre ne peut être vide."
+                } else {
+                    this.commentErrorEdit = null
+                    this.formEdit = true
+                }
             },
             verifyComment() {
                 if(this.comment && this.comment.length < 10) {
@@ -223,7 +274,7 @@
                 })
                 .then(response => {
                     if(response.data.download == 1) {
-                        window.open(this.$hostName+"/file/"+name, "_blank")
+                        window.open(this.$hostName+"/file/"+name+"/"+localStorage.getItem("token"), "_blank")
                     }
                 })
                 .catch(err => {
@@ -236,6 +287,9 @@
         computed: {
             isLoggedIn(){
                 return this.$store.getters.isLoggedIn
+            },
+            getUser() {
+                return localStorage.getItem("userId")
             }
         },
         filters: {
@@ -276,9 +330,13 @@
         margin-bottom: 20px;
     }
 
-    .icon-comment {
+    .icon-comment, .share {
         margin-left: 10px;
         cursor: pointer;
+    }
+
+    .pre-formatted {
+        white-space: pre-wrap;
     }
 
 </style>

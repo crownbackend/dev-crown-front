@@ -17,7 +17,7 @@
                                 <figure class="image is-4by3">
                                     <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                         <img v-bind:src="getImageUrl(video.imageFile)" :alt="video.imageFile">
-                                    </router-link>>
+                                    </router-link>
                                 </figure>
                             </div>
                             <div class="card-content">
@@ -32,7 +32,7 @@
                                             <p class="title is-4">
                                                 {{video.title}}
                                             </p>
-                                        </router-link>>
+                                        </router-link>
                                         <br>
                                         <p class="subtitle is-6">Dev-crown</p>
                                     </div>

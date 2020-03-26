@@ -25,10 +25,10 @@
                   Technologie
               </b-navbar-item>
               <b-navbar-item href="#">
-                  Forum
+                  Playliste
               </b-navbar-item>
               <b-navbar-item href="#">
-                  Playliste
+                  Forum
               </b-navbar-item>
           </template>
           <template slot="end">

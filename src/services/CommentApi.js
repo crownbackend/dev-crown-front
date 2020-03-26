@@ -2,6 +2,12 @@ import axios from "axios";
 import Vue from "vue";
 
 class CommentApi {
+
+    getComments(video) {
+        this.video = video
+        return axios.get(Vue.prototype.$hostName+"/comments/"+video)
+    }
+
     newComment(content, video) {
         this.content = content
         this.video = video
@@ -20,12 +26,15 @@ class CommentApi {
         formData.append("token", localStorage.getItem("token"))
         formData.append("id", this.id)
         formData.append('_method', 'PUT')
-        return axios.post(Vue.prototype.$hostName+"/comments", formData)
+        return axios.post(Vue.prototype.$hostName+"/comments/"+id, formData)
     }
 
-    getComments(video) {
-        this.video = video
-        return axios.get(Vue.prototype.$hostName+"/comments/"+video)
+    deleteComment(id) {
+        return axios.delete(Vue.prototype.$hostName+"/delete/"+id, {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
     }
 }
 
