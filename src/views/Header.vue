@@ -21,7 +21,7 @@
               <b-navbar-item tag="router-link" :to="{ name: 'Article' }">
                   Blog
               </b-navbar-item>
-              <b-navbar-item href="#">
+              <b-navbar-item tag="router-link" :to="{ name: 'Technology' }">
                   Technologie
               </b-navbar-item>
               <b-navbar-item href="#">
@@ -80,7 +80,9 @@
             logout: function () {
                 this.$store.dispatch('logout')
                     .then(() => {
-                        this.$router.push({path: "/"})
+                        this.$router.push({path: "/"}).catch(() => {
+
+                        })
                     })
             },
         }

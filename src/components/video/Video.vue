@@ -10,8 +10,8 @@
             <div class="title is-3">
                 Les dernières vidéos
             </div>
-            <div class="row" v-for="i in videosGroups" v-bind:key="i">
-                <div class="col-md-4" v-for="video in videos.slice(i * itemsPerRow, (i + 1) * itemsPerRow)" v-bind:key="video.id">
+            <div class="row">
+                <div class="col-md-4" v-for="video in videos" v-bind:key="video.id">
                     <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="content">
-                                    <p v-html="video.description.slice(0, 80)">
+                                    <p v-html="video.description.slice(0, 100)">
                                         ...
                                     </p>
                                     <br>
@@ -47,9 +47,13 @@
                                 </div>
                             </div>
                         </div>
-                    <hr>
+                    <br>
+                    <br>
                 </div>
             </div>
+        </div>
+        <div class="has-text-centered" v-if="showMore">
+            <button class="button is-dark" @click="getLoadVideos()">Voir plus de vidéos</button>
         </div>
         <hr>
     </div>
@@ -66,6 +70,7 @@
             return {
                 itemsPerRow: 3,
                 videos: [],
+                showMore: true
             }
         },
         mounted() {
@@ -93,6 +98,20 @@
             },
             getImageTechnoUrl(name) {
                 return this.$hostImages + "/technology/" + name;
+            },
+            getLoadVideos() {
+                let date = this.videos[this.videos.length - 1];
+
+                VideoApi.getLoadVideos(date.publishedAt)
+                    .then(response => {
+                        this.videos = this.videos.concat(response.data)
+                        if(response.data.length === 0) {
+                            this.showMore = false
+                        }
+                    })
+                    .catch(() => {
+                        alert('Erreur serveur !')
+                    })
             }
         }
     }

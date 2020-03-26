@@ -38,14 +38,13 @@
                                         <p class="title is-4">
                                             {{video.title}}
                                         </p>
-                                    </router-link>>
+                                    </router-link>
                                     <p class="subtitle is-6">Dev-crown</p>
                                 </div>
                             </div>
 
                             <div class="content">
-                                <p v-html="video.description.slice(0, 80)">
-                                    ...
+                                <p v-html="video.description.slice(0, 100)">
                                 </p>
                                 <br>
                                 <time datetime="2016-1-1">{{video.publishedAt | formatDate}}</time>

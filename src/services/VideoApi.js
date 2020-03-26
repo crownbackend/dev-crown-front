@@ -16,6 +16,13 @@ class VideoApi {
         this.slug = slug
         return axios.get(Vue.prototype.$hostName+"/video/"+slug+"/"+id)
     }
+
+    getLoadVideos(date) {
+        this.date = date
+        let formData = new FormData();
+        formData.append("date", this.date)
+        return axios.post(Vue.prototype.$hostName+"/videos/load/more", formData)
+    }
 }
 
 export default new VideoApi();

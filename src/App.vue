@@ -23,6 +23,7 @@
 
 <style lang="scss">
   @import "~bootstrap/dist/css/bootstrap-grid.min.css";
+  @import "~nprogress/nprogress.css";
 #app {
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;

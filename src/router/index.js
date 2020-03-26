@@ -3,12 +3,14 @@ import VueRouter from 'vue-router'
 import Home from "../components/Home"
 import store from "../store/index"
 import UserApi from "../services/UserApi"
+import NProgress from "nprogress"
 
 Vue.use(VueRouter)
 
 const video = () => import('../components/video/Video')
 const showVideo = () => import("../components/video/Show")
 const article = () => import("../components/blog/Article")
+const technology = () => import("../components/technology/Technology")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
 const login = () => import('../components/security/Login')
@@ -85,6 +87,14 @@ const routes = [
     path: "/videos/:slug/:id",
     name: "videoShow",
     component: showVideo
+  },
+  {
+    path: "/technologies",
+    name: "Technology",
+    component: technology,
+    meta: {
+      title: "Technologies"
+    }
   }
 ]
 
@@ -124,6 +134,19 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
   next()
+})
+
+// Nprogress
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+    NProgress.start()
+  }
+  next()
+})
+
+router.afterEach(() => {
+  NProgress.done()
 })
 
 export default router
