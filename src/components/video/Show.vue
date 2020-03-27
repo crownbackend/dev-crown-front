@@ -6,8 +6,8 @@
         <div>
             <p class="video-container" v-html="video.videoURL"></p>
         </div>
-        <div class="">
-            <br>
+        <hr>
+        <div>
             <span style="float: right" class="subtitle is-5">{{video.publishedAt|formatDate}}</span>
             <div v-if="isLoggedIn" class="download-video">
                 <button @click="downloadVideo(video.nameFileVideo)" class="button is-dark">

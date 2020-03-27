@@ -70,13 +70,14 @@
             return {
                 itemsPerRow: 3,
                 videos: [],
-                showMore: true
+                showMore: null
             }
         },
         mounted() {
             VideoApi.getVideos()
                 .then(response => {
                     this.videos = response.data.videos
+                    this.showMore = true
                 })
                 .catch(() => {
                    alert('Erreur serveur !');
@@ -116,3 +117,9 @@
         }
     }
 </script>
+
+<style>
+    .notification {
+        background-color: #D2D2D2;
+    }
+</style>

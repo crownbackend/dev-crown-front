@@ -10,12 +10,14 @@ Vue.use(VueRouter)
 const video = () => import('../components/video/Video')
 const showVideo = () => import("../components/video/Show")
 const article = () => import("../components/blog/Article")
+const showArticle = () => import("../components/blog/Show")
 const technology = () => import("../components/technology/Technology")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
 const login = () => import('../components/security/Login')
 const ForgotYourPassword = () => import("../components/security/ForgotYourPassword")
 const ConfirmPassword = () => import('../components/security/ConfirmPassword')
+const error404 = () => import("../components/error/Error404")
 
 const routes = [
   {
@@ -24,6 +26,14 @@ const routes = [
     component: Home,
     meta: {
       title: "Accueil"
+    }
+  },
+  {
+    path: '*',
+    name: 'Error404',
+    component: error404,
+    meta: {
+      title: "Erreur 404"
     }
   },
   {
@@ -82,6 +92,11 @@ const routes = [
     meta: {
       title: "Le Blog"
     }
+  },
+  {
+    path: "/blog/:slug/:id",
+    name: "showArticle",
+    component: showArticle
   },
   {
     path: "/videos/:slug/:id",

@@ -16,19 +16,19 @@
                         <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
-                                    <a href="">
+                                    <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
                                         <img v-bind:src="getImageUrl(article.imageFile)" :alt="article.imageFile">
-                                    </a>
+                                    </router-link>
                                 </figure>
                             </div>
                             <div class="card-content">
                                 <div class="media">
                                     <div class="media-content">
-                                        <a href="">
+                                        <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
                                             <p class="title is-4" :title="article.title">
                                                 {{article.title.slice(0,50)}}
                                             </p>
-                                        </a>
+                                        </router-link>
                                         <br>
                                         <p class="subtitle is-6">Dev-crown</p>
                                     </div>
