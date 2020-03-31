@@ -236,6 +236,7 @@
                         .catch(err => {
                             if(err.response.status == 500) {
                                 this.$store.dispatch('logout')
+                                this.formEditComment = false
                             }
                         })
                 }

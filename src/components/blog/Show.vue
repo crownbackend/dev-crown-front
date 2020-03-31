@@ -54,11 +54,12 @@
         mounted() {
             BlogApi.getArticle(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
-                    console.log(response)
                     this.article = response.data
                     document.title = response.data.title
                 })
-                .catch(console.error)
+                .catch(() => {
+                    alert('Erreur serveur')
+                })
         },
         methods: {
             getImageUrl(name) {

@@ -65,9 +65,10 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <a href="">
+                                <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
                                     <img v-bind:src="getImageUrl(article.imageFile, 'articles')" :alt="article.imageFile">
-                                </a>
+                                </router-link>
+
                             </figure>
                         </div>
                         <br>
@@ -75,9 +76,11 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <p class="title is-4 has-text-centered">
-                                       {{article.title}}
-                                    </p>
+                                    <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
+                                        <p class="title is-4 has-text-centered">
+                                           {{article.title}}
+                                        </p>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
