@@ -12,6 +12,7 @@ const showVideo = () => import("../components/video/Show")
 const article = () => import("../components/blog/Article")
 const showArticle = () => import("../components/blog/Show")
 const technology = () => import("../components/technology/Technology")
+const showTechnology = () => import("../components/technology/Show")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
 const login = () => import('../components/security/Login')
@@ -110,6 +111,11 @@ const routes = [
     meta: {
       title: "Technologies"
     }
+  },
+  {
+    path: "/technologies/:slug/:id",
+    name: "showTechnology",
+    component: showTechnology,
   }
 ]
 

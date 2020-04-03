@@ -68,7 +68,6 @@
         name: "Video",
         data() {
             return {
-                itemsPerRow: 3,
                 videos: [],
                 showMore: null
             }
@@ -82,11 +81,6 @@
                 .catch(() => {
                    alert('Erreur serveur !');
                 })
-        },
-        computed: {
-            videosGroups () {
-                return Array.from(Array(Math.ceil(this.videos.length / this.itemsPerRow)).keys())
-            }
         },
         filters: {
             formatDate(value) {

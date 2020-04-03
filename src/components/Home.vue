@@ -23,11 +23,11 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <p style="float: right" v-if="video.technology">
-                                        <a href="">
+                                    <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}">
+                                        <figure style="float: right" v-if="video.technology">
                                             <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
-                                        </a>
-                                    </p>
+                                        </figure>
+                                    </router-link>
                                     <p v-if="video.playliste">Playliste :
                                         <a href="">
                                             {{video.playliste.name}}
@@ -68,7 +68,6 @@
                                 <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
                                     <img v-bind:src="getImageUrl(article.imageFile, 'articles')" :alt="article.imageFile">
                                 </router-link>
-
                             </figure>
                         </div>
                         <br>

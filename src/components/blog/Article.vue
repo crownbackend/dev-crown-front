@@ -35,7 +35,7 @@
                                 </div>
 
                                 <div class="content">
-                                    <p v-html="article.description.slice(0, 80)">
+                                    <p v-html="article.metaDescription.slice(0, 80)">
                                         ...
                                     </p>
                                     <br>

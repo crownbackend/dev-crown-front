@@ -12,13 +12,17 @@
                     <div class="card-content">
                         <div class="media">
                             <div class="media-left">
-                                <figure class="image is-128x128">
-                                    <img :src="getImageTechnoUrl(technology.imageFile)" alt="Placeholder image">
-                                </figure>
+                                <router-link :to="{ name: 'showTechnology', params: {slug: technology.slug, id: technology.id}}">
+                                    <figure class="image is-128x128">
+                                        <img :src="getImageTechnoUrl(technology.imageFile)" alt="Placeholder image">
+                                    </figure>
+                                </router-link>
                             </div>
                         </div>
                         <div class="title">
-                            {{technology.name}}
+                            <router-link :to="{ name: 'showTechnology', params: {slug: technology.slug, id: technology.id}}">
+                                {{technology.name}}
+                            </router-link>
                         </div>
                         <p class="subtitle">
                             {{technology.description}}
@@ -44,7 +48,6 @@
         mounted() {
             TechnologyApi.getTechnologies()
                 .then(response => {
-                    console.log(response)
                     this.technologies = response.data.technologies
                 })
                 .catch(() => {
