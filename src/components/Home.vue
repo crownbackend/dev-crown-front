@@ -151,7 +151,7 @@
                 .catch(() => {
                     alert('Erreur serveur')
                 });
-            BlogApi.getLastArticles()
+            BlogApi.getLastArticlesHome()
                 .then(response => {
                     this.articles = response.data.articles
                 })
@@ -177,7 +177,7 @@
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+                return moment(String(value)).format('DD/MM/YYYY hh:mm')
             }
         },
     }

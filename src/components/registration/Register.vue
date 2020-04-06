@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="notification">
+        <div class="notification" style="margin-bottom: 50px">
             <div v-if="formRegister" class="columns">
                 <div class="column is-half">
                     <form method="post" @submit.prevent="sendForm" @change="checkFormValid">

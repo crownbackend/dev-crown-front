@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="Site">
     <Header :key="$route.fullPath" />
-    <main class="Site-content container">
+    <main class="Site-content">
       <router-view></router-view>
     </main>
     <Footer/>
@@ -23,7 +23,7 @@
 
 <style lang="scss">
   @import "~bootstrap/dist/css/bootstrap-grid.min.css";
-  @import "~nprogress/nprogress.css";
+  @import "~buefy/dist/buefy.css";
 #app {
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;

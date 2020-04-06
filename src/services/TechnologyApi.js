@@ -18,6 +18,11 @@ class TechnologyApi {
         formData.append("date", this.date)
         return axios.post(Vue.prototype.$hostName+"/technology/videos/load/more/"+id, formData)
     }
+
+    getLastTechnologies(id)
+    {
+        return axios.get(Vue.prototype.$hostName+"/technologies/load/more/"+id)
+    }
 }
 
 export default new TechnologyApi();

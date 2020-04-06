@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import Comment from "../../comment/Comment";
+    import Comment from "../comment/Comment";
     import BlogApi from "../../services/BlogApi";
     import moment from "moment";
     export default {
@@ -56,6 +56,7 @@
                 .then(response => {
                     this.article = response.data
                     document.title = response.data.title
+                    document.querySelector('meta[name="description"]').setAttribute("content", response.data.metaDescription.slice(0, 155));
                 })
                 .catch(() => {
                     alert('Erreur serveur')

@@ -6,8 +6,12 @@ class BlogApi {
         return axios.get(Vue.prototype.$hostName+"/articles")
     }
 
-    getLastArticles() {
-        return axios.get(Vue.prototype.$hostName+"/last/articles")
+    getLastArticlesHome() {
+        return axios.get(Vue.prototype.$hostName+"/articles/home")
+    }
+
+    getLastArticles(date) {
+        return axios.get(Vue.prototype.$hostName+"/last/articles/"+date)
     }
 
     getArticle(slug, id) {

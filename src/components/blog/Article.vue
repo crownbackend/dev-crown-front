@@ -10,9 +10,9 @@
             <div class="title is-3">
                 Les derniers articles
             </div>
-            <div class="columns" v-for="i in articlesGroups" v-bind:key="i">
-                <div class="column" v-for="article in articles.slice(i * itemsPerRow, (i + 1) * itemsPerRow)" v-bind:key="article.id">
-                    <div class="column">
+            <div class="row" v-for="i in articlesGroups" v-bind:key="i">
+                <div class="col-md-4" v-for="article in articles.slice(i * itemsPerRow, (i + 1) * itemsPerRow)" v-bind:key="article.id">
+                    <div style="margin-bottom: 50px">
                         <div class="card">
                             <div class="card-image">
                                 <figure class="image is-4by3">
@@ -46,6 +46,9 @@
                     </div>
                 </div>
             </div>
+            <div v-if="showMore">
+                <button class="button is-dark" @click="getLastArticle()">Voir plus d'article</button>
+            </div>
         </div>
     </div>
 </template>
@@ -62,12 +65,16 @@
             return {
                 itemsPerRow: 3,
                 articles: [],
+                showMore: false
             }
         },
         mounted() {
             BlogApi.getArticles()
                 .then(response => {
                     this.articles = response.data.articles
+                    if(this.articles.length > 9) {
+                        this.showMore = true
+                    }
                 })
                 .catch(() => {
                     alert('Erreur serveur !');
@@ -80,12 +87,24 @@
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+                return moment(String(value)).format('DD/MM/YYYY hh:mm')
             }
         },
         methods: {
             getImageUrl(name) {
                 return this.$hostImages + "/articles/" + name;
+            },
+            getLastArticle() {
+                let article = this.articles[this.articles.length - 1];
+                BlogApi.getLastArticles(article.publishedAt)
+                    .then(response => {
+                        console.log(response)
+                        this.articles = this.articles.concat(response.data)
+                        if(response.data.length === 0) {
+                            this.showMore = false
+                        }
+                    })
+                    .catch(console.error)
             }
         }
     }

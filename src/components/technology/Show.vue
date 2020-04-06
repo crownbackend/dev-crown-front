@@ -83,6 +83,8 @@
                 .then(response => {
                     this.technology = response.data.technology
                     this.videos = response.data.videos
+                    document.title = response.data.technology.name
+                    document.querySelector('meta[name="description"]').setAttribute("content", response.data.technology.description.slice(0, 155));
                     if(this.videos.length > 8) {
                         this.showMore = true
                     }

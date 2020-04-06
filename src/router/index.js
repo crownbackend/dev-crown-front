@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Home from "../components/Home"
 import store from "../store/index"
 import UserApi from "../services/UserApi"
-import NProgress from "nprogress"
 
 Vue.use(VueRouter)
 
@@ -26,7 +25,8 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      title: "Accueil"
+      title: "Accueil",
+      description: "Partez à la découverte du développement web avec un contenu éllaboré pour tous, gratuitement !"
     }
   },
   {
@@ -34,7 +34,8 @@ const routes = [
     name: 'Error404',
     component: error404,
     meta: {
-      title: "Erreur 404"
+      title: "Erreur 404",
+      description: "Erreur 404 page non trouvé !"
     }
   },
   {
@@ -43,6 +44,7 @@ const routes = [
     component: video,
     meta: {
       title: "Vidéos",
+      description: "Retrouver ici toutes les vidéos de ma chaîne Youtube !"
       // requiresAuth: true,
     }
   },
@@ -51,7 +53,8 @@ const routes = [
     name: "Register",
     component: register,
     meta: {
-      title: "Inscription"
+      title: "Inscription",
+      description: "Inscription sur dev-crown.com"
     }
   },
   {
@@ -59,7 +62,8 @@ const routes = [
     name: "ConfirmationAccount",
     component: confirmation,
     meta: {
-      title: "Confirmation de votre inscription"
+      title: "Confirmation de votre inscription",
+      description: "Confirmation de votre compte"
     }
   },
   {
@@ -67,7 +71,8 @@ const routes = [
     name: "Login",
     component: login,
     meta: {
-      title: "Connexion"
+      title: "Connexion",
+      description: "Connexion à votre compte"
     }
   },
   {
@@ -75,7 +80,8 @@ const routes = [
     name: "forgotPassword",
     component: ForgotYourPassword,
     meta: {
-      title: "Mot de passe oublié"
+      title: "Mot de passe oublié",
+      description: "Mot de passe oublié"
     }
   },
   {
@@ -83,7 +89,8 @@ const routes = [
     name:"verifyPassword",
     component: ConfirmPassword,
     meta: {
-      title: "Récupération de mot de passe"
+      title: "Récupération de mot de passe",
+      description: "Récupération de votre compte"
     }
   },
   {
@@ -91,7 +98,8 @@ const routes = [
     name: "Article",
     component: article,
     meta: {
-      title: "Le Blog"
+      title: "Le Blog",
+      description: "Retrouver ici tout mes articles !"
     }
   },
   {
@@ -109,7 +117,8 @@ const routes = [
     name: "Technology",
     component: technology,
     meta: {
-      title: "Technologies"
+      title: "Technologies",
+      description: "Retrouver ici toutes les technologies"
     }
   },
   {
@@ -154,20 +163,8 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title
+  document.querySelector('meta[name="description"]').setAttribute("content", to.meta.description);
   next()
-})
-
-// Nprogress
-
-router.beforeResolve((to, from, next) => {
-  if (to.name) {
-    NProgress.start()
-  }
-  next()
-})
-
-router.afterEach(() => {
-  NProgress.done()
 })
 
 export default router

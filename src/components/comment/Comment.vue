@@ -76,7 +76,7 @@
 
 <script>
     import moment from "moment";
-    import CommentApi from "../services/CommentApi";
+    import CommentApi from "../../services/CommentApi";
 
     export default {
         name: "Comment",
