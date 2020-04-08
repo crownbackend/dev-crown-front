@@ -72,7 +72,6 @@
             sendForm() {
                 UserApi.changePassword(this.$route.params.token, this.password)
                 .then(response => {
-                    console.log(response)
                     if(response.data.success === 1) {
                         this.afterSuccess = true
                         this.formEmpty = false
@@ -81,8 +80,8 @@
                         this.afterError = true
                     }
                 })
-                .catch(err => {
-                    console.log(err)
+                .catch(() => {
+                    alert("Erreur serveur")
                 })
             },
             password_check(pass) {

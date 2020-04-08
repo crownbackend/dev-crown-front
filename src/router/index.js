@@ -12,6 +12,8 @@ const article = () => import("../components/blog/Article")
 const showArticle = () => import("../components/blog/Show")
 const technology = () => import("../components/technology/Technology")
 const showTechnology = () => import("../components/technology/Show")
+const playlists = () => import("../components/playlist/Playlist")
+const playlist = () => import("../components/playlist/Show")
 const register = () => import('../components/registration/Register')
 const confirmation = () => import('../components/registration/ConfirmationAccount')
 const login = () => import('../components/security/Login')
@@ -125,13 +127,28 @@ const routes = [
     path: "/technologies/:slug/:id",
     name: "showTechnology",
     component: showTechnology,
+  },
+  {
+    path: "/playlistes",
+    name: "Playlist",
+    component: playlists,
+    meta: {
+      title: "Playliste",
+      description: "Retrouver ici toutes mes playliste youtube"
+    }
+  },
+  {
+    path: "/playliste/:slug/:id",
+    name: "showPlaylist",
+    component: playlist
   }
 ]
 
 const router = new VueRouter({
+  linkExactActiveClass: 'active',
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 // check token is valid

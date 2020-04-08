@@ -24,9 +24,15 @@
                                 <div class="media">
                                     <div class="media-content">
                                         <p style="float: right" v-if="video.technology">
-                                            <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                            <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}">
+                                                <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                            </router-link>
                                         </p>
-                                        <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
+                                        <p v-if="video.playliste">Playliste :
+                                            <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
+                                                {{video.playliste.name}}
+                                            </router-link>
+                                        </p>
                                         <br>
                                         <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                             <p class="title is-4">

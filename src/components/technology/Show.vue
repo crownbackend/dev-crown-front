@@ -27,10 +27,11 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <p style="float: right" v-if="video.technology">
-                                        <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                    <p v-if="video.playliste">Playliste :
+                                        <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
+                                            {{video.playliste.name}}
+                                        </router-link>
                                     </p>
-                                    <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
                                     <br>
                                     <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                         <p class="title is-4">
@@ -56,10 +57,8 @@
                     <hr>
                 </div>
             </div>
-            <div class="has-text-centered" v-if="showMore">
+            <div class="has-text-centered show-more" v-if="showMore">
                 <button class="button is-dark" @click="getLoadVideos()">Voir plus de vidéos</button>
-                <br>
-                <br>
             </div>
         </div>
     </div>
@@ -89,8 +88,8 @@
                         this.showMore = true
                     }
                 })
-                .catch(err => {
-                    console.log(err)
+                .catch(() => {
+                    alert('Erreur serveur !')
                 })
         },
         filters: {

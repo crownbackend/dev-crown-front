@@ -6,7 +6,7 @@
             </h1>
         </div>
         <div class="row">
-            <div class="col-md-4" v-for="technology in technologies" v-bind:key="technology.id">
+            <div class="col-md-4" style="padding-bottom: 20px" v-for="technology in technologies" v-bind:key="technology.id">
             <br>
                 <div class="card" >
                     <div class="card-content">
@@ -31,13 +31,9 @@
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <div class="has-text-centered" v-if="showMore">
-            <button class="button is-dark" @click="getLoadVideos()">Voir plus de vidéos</button>
+        <div class="has-text-centered show-more" v-if="showMore">
+            <button class="button is-dark" @click="getLoadTechnologies()">Voir plus de vidéos</button>
         </div>
-        <br>
-        <br>
     </div>
 </template>
 
@@ -68,9 +64,8 @@
             getImageTechnoUrl(name) {
                 return this.$hostImages + "/technology/" + name;
             },
-            getLoadVideos() {
+            getLoadTechnologies() {
                 let technology = this.technologies[this.technologies.length -1 ];
-                console.log(technology);
                 TechnologyApi.getLastTechnologies(technology.id)
                     .then(response => {
                         this.technologies = this.technologies.concat(response.data)

@@ -68,7 +68,6 @@
             sendForm() {
                 UserApi.sendNewPassword(this.email)
                     .then(response => {
-                        console.log(response)
                         if(response.data.error === 1) {
                             this.formEmpty = false
                             this.afterFailed = true

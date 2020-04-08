@@ -8,10 +8,9 @@ import moment from "moment";
 Vue.use(Buefy)
 
 Vue.config.productionTip = false
-Vue.prototype.$hostName = "https://127.0.0.1:8000/api"
-Vue.prototype.$hostImages = "https://127.0.0.1:8000/images"
-Vue.prototype.$hostVideos = "https://127.0.0.1:8000/videos/"
-
+Vue.prototype.$hostName = process.env.VUE_APP_HOSTNAME
+Vue.prototype.$hostImages = process.env.VUE_APP_HOSTIMAGE
+Vue.prototype.$hostVideos = process.env.VUE_APP_VIDEOS
 moment.locale('fr', {
   months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
   weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),

@@ -24,7 +24,7 @@
               <b-navbar-item tag="router-link" :to="{ name: 'Technology' }">
                   Technologie
               </b-navbar-item>
-              <b-navbar-item href="#">
+              <b-navbar-item tag="router-link" :to="{ name: 'Playlist' }">
                   Playliste
               </b-navbar-item>
               <b-navbar-item href="#">
@@ -88,3 +88,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .active {
+        color: #7957d5 !important;
+    }
+</style>

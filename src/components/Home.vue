@@ -29,9 +29,9 @@
                                         </figure>
                                     </router-link>
                                     <p v-if="video.playliste">Playliste :
-                                        <a href="">
+                                        <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
-                                        </a>
+                                        </router-link>
                                     </p>
                                     <br>
                                     <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">

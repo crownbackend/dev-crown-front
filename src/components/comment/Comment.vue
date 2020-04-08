@@ -98,7 +98,9 @@
                 .then(response => {
                     this.comments = response.data.comments
                 })
-                .catch(console.error)
+                .catch(() => {
+                    alert('Erreur serveur !')
+                })
         },
         methods: {
             sendForm() {
@@ -151,7 +153,6 @@
                 if(this.formEdit) {
                     CommentApi.editCommentArticle(id, content)
                         .then(response => {
-                            console.log(response)
                             if(response.data.comment === 0) {
                                 this.commentError = "Votre commenaitre est trop court (au moins 10 caractères)"
                             } else if(response.data.edit === 1) {
