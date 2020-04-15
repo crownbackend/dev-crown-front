@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="Site">
+  <div id="app" class="Site container-fluid">
     <Header :key="$route.fullPath" />
     <main class="Site-content">
       <router-view></router-view>

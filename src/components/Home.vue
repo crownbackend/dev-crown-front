@@ -23,7 +23,7 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}">
+                                    <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}" v-if="video.technology">
                                         <figure style="float: right" v-if="video.technology">
                                             <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                         </figure>
@@ -39,7 +39,6 @@
                                             {{video.title}}
                                         </p>
                                     </router-link>
-                                    <p class="subtitle is-6">Dev-crown</p>
                                 </div>
                             </div>
 
@@ -47,7 +46,7 @@
                                 <p v-html="video.description.slice(0, 100)">
                                 </p>
                                 <br>
-                                <time datetime="2016-1-1">{{video.publishedAt | formatDate}}</time>
+                                <time datetime="2016-1-1" @click="countdown">{{video.publishedAt | formatDate}}</time>
                             </div>
                         </div>
                     </div>
@@ -71,12 +70,12 @@
                             </figure>
                         </div>
                         <br>
-                        <time datetime="2016-1-1">{{article.publishedAt | formatDate}}</time>
+                        <time datetime="2016-1-1">{{article.publishedAt |formatDate}}</time>
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
                                     <router-link :to="{ name: 'showArticle', params: {slug: article.slug, id: article.id}}">
-                                        <p class="title is-4 has-text-centered">
+                                        <p class="title is-4">
                                            {{article.title}}
                                         </p>
                                     </router-link>
@@ -140,7 +139,9 @@
             return {
                 videos: [],
                 articles: [],
-                topics: []
+                topics: [],
+                interval: null,
+                now: new Date(),
             }
         },
         mounted() {
@@ -173,13 +174,23 @@
             },
             getImageTechnoUrl(name) {
                 return this.$hostImages + "/technology/" + name;
+            },
+            countdown() {
+                this.videos.forEach((e) => {
+                    let date = moment(e.publishedAt)
+
+                    if(date.isAfter(moment.now())) {
+                    console.log(date.fromNow())
+                        e.publishedAt = date.fromNow()
+                    }
+                })
             }
         },
         filters: {
             formatDate(value) {
                 return moment(String(value)).format('DD/MM/YYYY hh:mm')
             }
-        },
+        }
     }
 </script>
 

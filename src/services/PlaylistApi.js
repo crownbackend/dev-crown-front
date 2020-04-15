@@ -13,6 +13,12 @@ class PlaylistApi {
     getPlaylist(slug, id) {
         return axios.get(Vue.prototype.$hostName+"/playlist/"+slug+"/"+id)
     }
+
+    getLoadMoreVideosPlaylist(id, date) {
+        let formData = new FormData()
+        formData.append("date", date)
+        return axios.post(Vue.prototype.$hostName+"/playlist/videos/load/more/"+id, formData)
+    }
 }
 
 export default new PlaylistApi();

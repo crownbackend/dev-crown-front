@@ -39,8 +39,6 @@
                                                 {{video.title}}
                                             </p>
                                         </router-link>
-                                        <br>
-                                        <p class="subtitle is-6">Dev-crown</p>
                                     </div>
                                 </div>
 

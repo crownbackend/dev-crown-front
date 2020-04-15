@@ -134,7 +134,7 @@ const routes = [
     component: playlists,
     meta: {
       title: "Playliste",
-      description: "Retrouver ici toutes mes playliste youtube"
+      description: "Retrouver ici toutes mes playlistes youtube"
     }
   },
   {

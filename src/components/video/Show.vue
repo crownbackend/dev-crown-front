@@ -52,11 +52,21 @@
             <div class="col-md-4">
                 <div class="row">
                     <div class="col-md-12" v-if="video.technology">
-                        <div>Technologie : {{video.technology.name}}</div>
+                        <div>
+                            Technologie :
+                            <router-link :to="{name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}">
+                                {{video.technology.name}}
+                            </router-link>
+                        </div>
                     </div>
                     <br>
                     <div class="col-md-12">
-                        <div class="content">Playliste : {{video.playliste.name}}</div>
+                        <div class="content">
+                            Playliste :
+                            <router-link :to="{name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
+                                {{video.playliste.name}}
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>

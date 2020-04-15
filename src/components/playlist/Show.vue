@@ -28,7 +28,9 @@
                         <div class="media">
                             <div class="media-content">
                                 <p style="float: right" v-if="video.technology">
-                                    <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                    <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}">
+                                        <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
+                                    </router-link>
                                 </p>
                                 <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
                                 <br>
@@ -51,11 +53,14 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
                 <hr>
             </div>
         </div>
+        <br>
+        <div class="has-text-centered" v-if="showMore">
+            <button class="button is-dark" @click="getLoadVideos()">Voir plus de vidéos</button>
+        </div>
+        <br>
     </div>
 </template>
 
@@ -68,17 +73,24 @@
         data() {
             return {
                 playlist: null,
-                videos: []
+                videos: [],
+                showMore: false
             }
         },
         mounted() {
             PlaylistApi.getPlaylist(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
-                    console.log(response)
                     this.playlist = response.data.playlist
                     this.videos = response.data.videos
+                    if(this.videos.length >= 9) {
+                        this.showMore = true
+                    }
+                    document.title = response.data.playlist.name
+                    document.querySelector('meta[name="description"]').setAttribute("content", response.data.playlist.description.slice(0, 155));
                 })
-                .catch(console.error)
+                .catch(() => {
+                    alert('Erreur serveur')
+                })
         },
         methods: {
             getImageUrl(name) {
@@ -87,6 +99,19 @@
             getImageTechnoUrl(name) {
                 return this.$hostImages + "/technology/" + name;
             },
+            getLoadVideos() {
+                let video = this.videos[this.videos.length - 1];
+                PlaylistApi.getLoadMoreVideosPlaylist(this.$route.params.id, video.publishedAt)
+                    .then(response => {
+                        this.videos = this.videos.concat(response.data)
+                        if(response.data.length === 0) {
+                            this.showMore = false
+                        }
+                    })
+                    .catch(() => {
+                        alert("Erreur serveur !")
+                    })
+            }
         },
         filters: {
             formatDate(value) {
