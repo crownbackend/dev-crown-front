@@ -24,7 +24,7 @@
                             </router-link>
                         </figure>
                     </div>
-                    <div class="card-content">
+                    <div class="card-content has-text-centered">
                         <div class="media">
                             <div class="media-content">
                                 <p style="float: right" v-if="video.technology">
@@ -115,7 +115,7 @@
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+                return moment(String(value)).fromNow()
             }
         },
     }

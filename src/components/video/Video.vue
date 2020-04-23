@@ -47,7 +47,7 @@
                                         ...
                                     </p>
                                     <br>
-                                    <time datetime="2016-1-1">{{video.publishedAt | formatDate}}</time>
+                                    <time datetime="2016-1-1">{{video.publishedAt|formatDate}}</time>
                                 </div>
                             </div>
                         </div>
@@ -86,11 +86,6 @@
                    alert('Erreur serveur !');
                 })
         },
-        filters: {
-            formatDate(value) {
-                return moment(String(value)).format('DD/MM/YYYY hh:mm')
-            }
-        },
         methods: {
             getImageUrl(name) {
                 return this.$hostImages + "/videos/" + name;
@@ -100,7 +95,6 @@
             },
             getLoadVideos() {
                 let date = this.videos[this.videos.length - 1];
-
                 VideoApi.getLoadVideos(date.publishedAt)
                     .then(response => {
                         this.videos = this.videos.concat(response.data)
@@ -111,6 +105,11 @@
                     .catch(() => {
                         alert('Erreur serveur !')
                     })
+            }
+        },
+        filters: {
+            formatDate(value) {
+                return moment(value).fromNow()
             }
         }
     }

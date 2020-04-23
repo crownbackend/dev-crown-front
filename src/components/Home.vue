@@ -46,7 +46,7 @@
                                 <p v-html="video.description.slice(0, 100)">
                                 </p>
                                 <br>
-                                <time datetime="2016-1-1" @click="countdown">{{video.publishedAt | formatDate}}</time>
+                                <time datetime="2016-1-1">{{video.publishedAt |formatDate}}</time>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                 now: new Date(),
             }
         },
-        mounted() {
+        created() {
             VideoApi.getLastVideos()
                 .then(response => {
                     this.videos = response.data.videos
@@ -174,21 +174,11 @@
             },
             getImageTechnoUrl(name) {
                 return this.$hostImages + "/technology/" + name;
-            },
-            countdown() {
-                this.videos.forEach((e) => {
-                    let date = moment(e.publishedAt)
-
-                    if(date.isAfter(moment.now())) {
-                    console.log(date.fromNow())
-                        e.publishedAt = date.fromNow()
-                    }
-                })
             }
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('DD/MM/YYYY hh:mm')
+                return moment(value).fromNow()
             }
         }
     }

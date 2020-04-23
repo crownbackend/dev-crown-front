@@ -15,7 +15,7 @@
             </div>
             <hr>
             <div class="row" v-if="videos">
-                <div class="col-md-4" v-for="video in videos" v-bind:key="video.id">
+                <div class="col-md-4 has-text-centered" v-for="video in videos" v-bind:key="video.id">
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
@@ -94,7 +94,7 @@
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('MM/DD/YYYY hh:mm')
+                return moment(String(value)).fromNow()
             }
         },
         methods: {

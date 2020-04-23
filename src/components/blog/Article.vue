@@ -85,7 +85,7 @@
         },
         filters: {
             formatDate(value) {
-                return moment(String(value)).format('DD/MM/YYYY hh:mm')
+                return moment(String(value)).fromNow()
             }
         },
         methods: {
