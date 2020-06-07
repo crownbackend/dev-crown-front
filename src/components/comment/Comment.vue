@@ -33,7 +33,7 @@
         <div v-for="comment in comments" v-bind:key="comment.id">
             <div class="notification comment">
                 <figure class="image img-avatar">
-                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                    <img class="is-rounded" :src="getImageUrl(comment.user.avatar, 'avatars')" :alt="comment.user.avatar">
                 </figure>
                 <div class="content-author">
                     <strong>{{comment.user.username}}</strong>
@@ -126,6 +126,9 @@
                             }
                         })
                 }
+            },
+            getImageUrl(name, docs) {
+                return this.$hostImages + "/"+docs+"/" + name;
             },
             editComment(id) {
                 this.idChange = id

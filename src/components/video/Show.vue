@@ -59,13 +59,17 @@
                             </router-link>
                         </div>
                     </div>
-                    <br>
+
+                    <div class="col-md-12">
+                        Playliste :
+                        <router-link :to="{name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
+                            {{video.playliste.name}}
+                        </router-link>
+                    </div>
                     <div class="col-md-12">
                         <div class="content">
-                            Playliste :
-                            <router-link :to="{name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
-                                {{video.playliste.name}}
-                            </router-link>
+                            Ajouter à mes favories
+                            <i class="far fa-heart fa-2x"></i>
                         </div>
                     </div>
                 </div>
@@ -105,7 +109,7 @@
         <div v-for="comment in comments" v-bind:key="comment.id">
             <div class="notification comment">
                 <figure class="image img-avatar">
-                    <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                    <img class="is-rounded" :src="getImageUrl(comment.user.avatar, 'avatars')" :alt="comment.user.avatar">
                 </figure>
                 <div class="content-author">
                     <strong>{{comment.user.username}}</strong>

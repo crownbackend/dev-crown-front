@@ -20,6 +20,8 @@ const login = () => import('../components/security/Login')
 const ForgotYourPassword = () => import("../components/security/ForgotYourPassword")
 const ConfirmPassword = () => import('../components/security/ConfirmPassword')
 const error404 = () => import("../components/error/Error404")
+const profile = () => import("../components/profile/Profile")
+const editProfile = () => import("../components/profile/Edit")
 
 const routes = [
   {
@@ -141,6 +143,22 @@ const routes = [
     path: "/playliste/:slug/:id",
     name: "showPlaylist",
     component: playlist
+  },
+  {
+    path: "/profile/:username",
+    name: "profile",
+    component: profile,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/profile/edit/:username",
+    name: "editProfile",
+    component: editProfile,
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 

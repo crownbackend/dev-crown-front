@@ -28,11 +28,12 @@
                                             <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                         </figure>
                                     </router-link>
-                                    <p v-if="video.playliste">Playliste :
+                                    <i class="far fa-heart fa-2x"></i>
+                                    <div v-if="video.playliste">Playliste :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
                                         </router-link>
-                                    </p>
+                                    </div>
                                     <br>
                                     <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
                                         <p class="title is-4">

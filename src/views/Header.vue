@@ -33,8 +33,10 @@
           </template>
           <template slot="end">
               <b-navbar-dropdown :label="username" v-if="isLoggedIn">
-                  <b-navbar-item href="#">
-                      About
+                  <b-navbar-item href="#" v-if="username">
+                      <router-link :to="{name: 'profile', params: {username: username}}">
+                        Mon profile
+                      </router-link>
                   </b-navbar-item>
                   <b-navbar-item href="#">
                       Contact

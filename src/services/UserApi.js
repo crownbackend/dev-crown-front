@@ -30,6 +30,7 @@ class UserApi {
 
     verifyToken() {
         //this.token = token
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem("token")
         return axios.get(Vue.prototype.$hostName+"/check/login/verify/token")
     }
 
@@ -46,6 +47,21 @@ class UserApi {
         const formData = new FormData();
         formData.append("password", password)
         return axios.post(Vue.prototype.$hostName+"/forgot/password/"+token, formData)
+    }
+
+    verifyProfile(username) {
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem("token")
+        return axios.get(Vue.prototype.$hostName+"/profile/"+username);
+    }
+
+    editProfile(username, email, password, file) {
+        let formData = new FormData()
+        formData.append("email", email)
+        formData.append("username", username)
+        formData.append("password", password)
+        formData.append("avatar", file)
+        formData.append("_method", "PUT")
+        return axios.post(Vue.prototype.$hostName+"/profile/edit/", formData);
     }
 }
 

@@ -3,7 +3,7 @@
         <div class="container">
             <div class="notification">
                 <h1 class="title is-1 has-text-centered">Connexion</h1>
-                <form method="post" @submit.prevent="login">
+                <form method="post" @submit.prevent="login" @change="checkFormValid">
                     <div class="is-divider is-primary"></div>
                     <div class="field">
                         <label for="username" class="label">Nom d'utilisateur</label>
@@ -33,7 +33,7 @@
                     <br>
                     <div class="field">
                         <p class="control">
-                            <button class="button is-dark is-outlined is-fullwidth" v-bind:class="{'is-loading': loading}" >
+                            <button class="button is-dark is-outlined is-fullwidth" :class="{'cursor': !formValid, 'is-loading': loading}" :disabled="!formValid" >
                                 Se connecter
                             </button>
                         </p>
@@ -59,10 +59,18 @@
                 username: null,
                 password: null,
                 loading: false,
-                errorMessage: null
+                errorMessage: null,
+                formValid: false
             }
         },
         methods: {
+            checkFormValid() {
+                if(this.username && this.password) {
+                    this.formValid = true
+                } else {
+                    this.formValid = false
+                }
+            },
             login() {
                 let username = this.username;
                 let password = this.password;
