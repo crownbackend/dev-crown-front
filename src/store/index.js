@@ -14,11 +14,12 @@ export default new Vuex.Store({
     auth_request(state) {
       state.status = 'loading'
     },
-    auth_success(state, token, user, userId) {
+    auth_success(state, token, user, userId, email) {
       state.status = 'success'
       state.token = token
       state.user = user
       state.userId = userId
+      state.email = email
     },
     auth_error(state) {
       state.status = 'error'
@@ -28,6 +29,7 @@ export default new Vuex.Store({
       state.token = ''
       state.user = ''
       state.userId = ''
+      state.email = ''
     },
   },
   actions: {
@@ -43,9 +45,11 @@ export default new Vuex.Store({
               const token = resp.data.token
               const user = resp.data.user
               const userId = resp.data.userId
+              const email = resp.data.email
               localStorage.setItem('token', token)
               localStorage.setItem('user', user)
               localStorage.setItem('userId', userId)
+              localStorage.setItem('email', email)
               // Add the following line:
               axios.defaults.headers.common['Authorization'] = token
               commit('auth_success', token, user)
@@ -56,6 +60,7 @@ export default new Vuex.Store({
               localStorage.removeItem('token')
               localStorage.removeItem('user')
               localStorage.removeItem('userId')
+              localStorage.removeItem('email')
               reject(err)
             })
       })
@@ -66,6 +71,7 @@ export default new Vuex.Store({
         localStorage.removeItem('token')
         localStorage.removeItem('user')
         localStorage.removeItem('userId')
+        localStorage.removeItem('email')
         delete axios.defaults.headers.common['Authorization']
         resolve()
       })

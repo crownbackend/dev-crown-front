@@ -145,7 +145,7 @@ const routes = [
     component: playlist
   },
   {
-    path: "/profile/:username",
+    path: "/profile/",
     name: "profile",
     component: profile,
     meta: {
@@ -153,7 +153,7 @@ const routes = [
     }
   },
   {
-    path: "/profile/edit/:username",
+    path: "/profile/edit/",
     name: "editProfile",
     component: editProfile,
     meta: {

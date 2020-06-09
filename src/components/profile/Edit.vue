@@ -53,6 +53,7 @@
                 </div>
             </form>
         </div>
+    <br>
     </div>
 </template>
 
@@ -99,18 +100,24 @@
                                 message: 'Votre compte a bien été modifié.',
                                 type: 'is-success'
                             })
+                            this.$store.dispatch('logout')
+                            this.$router.push('/mon-compte/connexion')
+                        } else if(response.data.detail) {
+                            this.$buefy.notification.open({
+                                message: response.data.detail,
+                                type: 'is-danger'
+                            })
                         } else {
                             this.$buefy.notification.open({
-                                message: 'Erreur de modification !',
+                                message: response.data,
                                 type: 'is-danger'
                             })
                         }
                     })
                     .catch(err => {
-                        console.log(err)
-                        // if(err.response.status == 500) {
-                        //     this.$store.dispatch('logout')
-                        // }
+                        if(err.response.status == 500) {
+                            this.$store.dispatch('logout')
+                        }
                     })
             },
             verifyUsername() {
@@ -123,7 +130,7 @@
                             if(response.data.good === 1) {
                                 this.usernameGood = true;
                                 this.usernameMessageError = null
-                            } else if(response.data.error === 1){
+                            } else if(response.data.error === 1 && response.data.username != localStorage.getItem("user")){
                                 this.usernameMessageError = "Nom d'utilisateur déja pris !"
                                 this.usernameGood = false;
                             }
@@ -143,7 +150,7 @@
                             if(response.data.good === 1) {
                                 this.emailGood = true;
                                 this.emailMessageError = null
-                            } else if(response.data.error === 1){
+                            } else if(response.data.error === 1&& response.data.email != localStorage.getItem("email")){
                                 this.emailMessageError = "Email déja pris !"
                                 this.emailGood = false;
                             }
