@@ -27,6 +27,7 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
+                                    <Favorie/>
                                     <p v-if="video.playliste">Playliste :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
@@ -67,9 +68,11 @@
 <script>
     import TechnologyApi from "../../services/TechnologyApi";
     import moment from "moment";
+    import Favorie from "../favorie/Favorie";
 
     export default {
         name: "Show",
+        components: {Favorie},
         data() {
             return {
                 technology: null,

@@ -32,6 +32,7 @@
                                         <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                     </router-link>
                                 </p>
+                                <favorie/>
                                 <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
                                 <br>
                                 <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
@@ -67,9 +68,11 @@
 <script>
     import PlaylistApi from "../../services/PlaylistApi";
     import moment from "moment";
+    import Favorie from "../favorie/Favorie";
 
     export default {
         name: "Show",
+        components: {Favorie},
         data() {
             return {
                 playlist: null,

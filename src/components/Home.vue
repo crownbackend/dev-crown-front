@@ -28,7 +28,7 @@
                                             <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                         </figure>
                                     </router-link>
-                                    <i class="far fa-heart fa-2x"></i>
+                                    <Favorie :video-id="video.id"/>
                                     <div v-if="video.playliste">Playliste :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
@@ -133,9 +133,11 @@
     import moment from "moment";
     import BlogApi from "../services/BlogApi";
     import ForumApi from "../services/ForumApi";
+    import Favorie from "./favorie/Favorie";
 
     export default {
         name: "Home",
+        components: {Favorie},
         data() {
             return {
                 videos: [],

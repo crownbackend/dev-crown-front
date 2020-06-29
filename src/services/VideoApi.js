@@ -23,6 +23,14 @@ class VideoApi {
         formData.append("date", this.date)
         return axios.post(Vue.prototype.$hostName+"/videos/load/more", formData)
     }
+
+    addFavored(userId, videoId) {
+        let formData = new FormData();
+        formData.append("userId", userId)
+        formData.append("videoId", videoId)
+
+        return axios.post(Vue.prototype.$hostName+"/videos/add/favored", formData)
+    }
 }
 
 export default new VideoApi();
