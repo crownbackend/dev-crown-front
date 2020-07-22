@@ -69,7 +69,7 @@
                     <div class="col-md-12">
                         <div class="content">
                             Ajouter à mes favories
-                            <i class="far fa-heart fa-2x"></i>
+                            <Favorie :video-id="video.id" :favored-video="video.favored"/>
                         </div>
                     </div>
                 </div>
@@ -155,9 +155,11 @@
     import axios from "axios";
     import CommentApi from "../../services/CommentApi";
     import moment from "moment";
+    import Favorie from "../favorie/Favorie";
 
     export default {
         name: "Show",
+        components: {Favorie},
         data() {
             return {
                 video: null,

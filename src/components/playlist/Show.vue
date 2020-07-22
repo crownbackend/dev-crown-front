@@ -32,7 +32,7 @@
                                         <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                     </router-link>
                                 </p>
-                                <favorie/>
+                                <favorie :video-id="video.id" :favored-video="video.favored"/>
                                 <p v-if="video.playliste">Playliste : {{video.playliste.name}}</p>
                                 <br>
                                 <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
