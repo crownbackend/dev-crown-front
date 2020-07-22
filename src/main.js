@@ -4,9 +4,13 @@ import router from './router'
 import store from './store'
 import Buefy from 'buefy'
 import moment from "moment";
+import axios from "axios";
 
 Vue.use(Buefy)
 
+if(localStorage.getItem('token')) {
+  axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
+}
 Vue.config.productionTip = false
 Vue.prototype.$hostName = process.env.VUE_APP_HOSTNAME
 Vue.prototype.$hostImages = process.env.VUE_APP_HOSTIMAGE

@@ -28,7 +28,7 @@
                                             <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
                                         </figure>
                                     </router-link>
-                                    <Favorie :video-id="video.id"/>
+                                    <Favorie :video-id="video.id" :favored-video="video.favored"/>
                                     <div v-if="video.playliste">Playliste :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
@@ -188,10 +188,6 @@
 </script>
 
 <style scoped>
-    .notification {
-        background-color: #D2D2D2;
-    }
-
     .table {
         margin-left: auto;
         margin-right: auto;

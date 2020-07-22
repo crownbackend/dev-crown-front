@@ -1,7 +1,9 @@
 <template>
     <div>
         <span style="cursor: pointer" @click="addFavored">
-            <i class="fa-heart fa-2x" :class="{'far': favored}"></i>
+<!--            <i v-if="favoredVideo" class="fas fa-heart fa-2x"></i>-->
+<!--            <i v-else class="far fa-heart fa-2x"></i>-->
+            <i class="fa-heart fa-2x" :class="{'fas': favoredTrue, 'far': favoredFalse}"></i>
         </span>
     </div>
 </template>
@@ -14,11 +16,20 @@
         name: 'Favorie',
         data() {
             return {
-                favored: true
+                favoredTrue: null,
+                favoredFalse: null
             }
         },
         props: {
-            videoId: Number
+            videoId: Number,
+            favoredVideo: Number
+        },
+        mounted() {
+            if(this.favoredVideo == 1) {
+                this.favoredTrue = true
+            } else {
+                this.favoredFalse = true
+            }
         },
         methods: {
             addFavored() {
@@ -26,11 +37,30 @@
                     UserApi.verifyToken()
                         .then(response => {
                             if(response.data.token_valid == 1) {
-                                VideoApi.addFavored(localStorage.getItem("userId"), this.videoId)
-                                .then(response => {
-                                    console.log(response)
-                                })
-                                .catch(console.error)
+                                if(this.favoredTrue == true) {
+                                    VideoApi.removeFavored(localStorage.getItem("userId"), this.videoId)
+                                    .then(response => {
+                                        if(response.data.success === 1) {
+                                            this.favoredFalse = true
+                                            this.favoredTrue = false
+                                        }
+                                    })
+                                    .catch(() => {
+                                        this.$store.dispatch('logout')
+                                        alert('Erreur serveur veuillez réssayer plus tard')
+                                    })
+                                } else {
+                                    VideoApi.addFavored(localStorage.getItem("userId"), this.videoId)
+                                        .then(response => {
+                                            if(response.data.success === 1) {
+                                                this.favoredTrue = 1
+                                            }
+                                        })
+                                        .catch(() => {
+                                            this.$store.dispatch('logout')
+                                            alert('Erreur serveur veuillez réssayer plus tard')
+                                        })
+                                }
                             }
                         })
                         .catch(() => {

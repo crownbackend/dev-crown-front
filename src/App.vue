@@ -60,4 +60,8 @@
   margin-top: 20px;
 }
 
+  .notification {
+    background-color: #D2D2D2;
+  }
+
 </style>

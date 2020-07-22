@@ -3,9 +3,11 @@
         <div v-if="technology">
             <h1 class="has-text-centered title is-1">{{technology.name}}</h1>
             <br>
-            <p class="subtitle is-4 container">
-                {{technology.description}}
-            </p>
+            <div class="notification">
+                <p class="subtitle is-4 has-text-centered">
+                    {{technology.description}}
+                </p>
+            </div>
             <br>
             <div class="title is-3 has-text-centered" v-if="videos.length !== 0">
                 La liste des vidéos
@@ -27,7 +29,7 @@
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-content">
-                                    <Favorie/>
+                                    <Favorie :video-id="video.id" :favored-video="video.favored"/>
                                     <p v-if="video.playliste">Playliste :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
