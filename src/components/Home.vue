@@ -154,6 +154,8 @@
                 })
                 .catch(() => {
                     alert('Erreur serveur')
+                    this.$store.dispatch('logout')
+                    this.$router.go(this.$router.currentRoute)
                 });
             BlogApi.getLastArticlesHome()
                 .then(response => {

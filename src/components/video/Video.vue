@@ -86,7 +86,9 @@
                     this.showMore = true
                 })
                 .catch(() => {
-                   alert('Erreur serveur !');
+                    alert('Erreur serveur')
+                    this.$store.dispatch('logout')
+                    this.$router.go(this.$router.currentRoute)
                 })
         },
         methods: {
@@ -100,8 +102,8 @@
                 let date = this.videos[this.videos.length - 1];
                 VideoApi.getLoadVideos(date.publishedAt)
                     .then(response => {
-                        this.videos = this.videos.concat(response.data)
-                        if(response.data.length === 0) {
+                        this.videos = this.videos.concat(response.data.videos)
+                        if(response.data.videos.length === 0) {
                             this.showMore = false
                         }
                     })

@@ -93,6 +93,8 @@
                 })
                 .catch(() => {
                     alert('Erreur serveur')
+                    this.$store.dispatch('logout')
+                    this.$router.go(this.$router.currentRoute)
                 })
         },
         methods: {
@@ -106,8 +108,8 @@
                 let video = this.videos[this.videos.length - 1];
                 PlaylistApi.getLoadMoreVideosPlaylist(this.$route.params.id, video.publishedAt)
                     .then(response => {
-                        this.videos = this.videos.concat(response.data)
-                        if(response.data.length === 0) {
+                        this.videos = this.videos.concat(response.data.videos)
+                        if(response.data.videos.length === 0) {
                             this.showMore = false
                         }
                     })

@@ -94,7 +94,9 @@
                     }
                 })
                 .catch(() => {
-                    alert('Erreur serveur !')
+                    alert('Erreur serveur')
+                    this.$store.dispatch('logout')
+                    this.$router.go(this.$router.currentRoute)
                 })
         },
         filters: {
@@ -114,8 +116,8 @@
 
                 TechnologyApi.getLastVideosTechnology(technology.publishedAt, technology.technology.id)
                     .then(response => {
-                        this.videos = this.videos.concat(response.data)
-                        if(response.data.length === 0) {
+                        this.videos = this.videos.concat(response.data.videos)
+                        if(response.data.videos.length === 0) {
                             this.showMore = false
                         }
                     })
