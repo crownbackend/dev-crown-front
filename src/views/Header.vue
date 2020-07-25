@@ -30,6 +30,9 @@
               <b-navbar-item href="#">
                   Forum
               </b-navbar-item>
+              <b-navbar-item href="#">
+                <SearchMenu/>
+              </b-navbar-item>
           </template>
           <template slot="end">
               <b-navbar-dropdown :label="username" v-if="isLoggedIn">
@@ -61,8 +64,10 @@
 </template>
 
 <script>
+    import SearchMenu from "../components/search/SearchMenu";
     export default {
         name: "Header",
+        components: {SearchMenu},
         data() {
             return {
                 username: null

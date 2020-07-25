@@ -22,6 +22,7 @@ const ConfirmPassword = () => import('../components/security/ConfirmPassword')
 const error404 = () => import("../components/error/Error404")
 const profile = () => import("../components/profile/Profile")
 const editProfile = () => import("../components/profile/Edit")
+const Search = () => import("../components/search/Search")
 
 const routes = [
   {
@@ -158,7 +159,12 @@ const routes = [
     component: editProfile,
     meta: {
       requiresAuth: true
-    }
+    },
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: Search
   }
 ]
 

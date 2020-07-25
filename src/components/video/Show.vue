@@ -181,7 +181,9 @@
                     document.title = this.video.title
                 })
                 .catch(() => {
-                    alert("Erreur serveur")
+                    alert('Erreur serveur')
+                    // this.$store.dispatch('logout')
+                    // this.$router.go(this.$router.currentRoute)
                 })
             CommentApi.getComments(this.$route.params.id)
             .then(response => {
