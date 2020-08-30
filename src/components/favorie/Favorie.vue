@@ -43,6 +43,10 @@
                                         if(response.data.success === 1) {
                                             this.favoredFalse = true
                                             this.favoredTrue = false
+                                            this.$buefy.notification.open({
+                                              message: 'Video supprimer de vos favories !',
+                                              type: 'is-danger'
+                                            })
                                         }
                                     })
                                     .catch(() => {
@@ -54,6 +58,10 @@
                                         .then(response => {
                                             if(response.data.success === 1) {
                                                 this.favoredTrue = 1
+                                                this.$buefy.notification.open({
+                                                  message: 'Video ajouter à vos favories !',
+                                                  type: 'is-success'
+                                                })
                                             }
                                         })
                                         .catch(() => {
