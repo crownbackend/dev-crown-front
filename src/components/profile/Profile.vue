@@ -10,11 +10,8 @@
                 </router-link>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     Mes vidéos favorites
-                </div>
-                <div class="col-md-6">
-                    Mes articles favorites
                 </div>
             </div>
             <div class="row">
