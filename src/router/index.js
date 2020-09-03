@@ -164,7 +164,11 @@ const routes = [
   {
     path: "/search",
     name: "search",
-    component: Search
+    component: Search,
+    meta: {
+      title: "Recherche",
+      description: "Rechercher sur le site web les ressources qui vous intéresse !"
+    }
   }
 ]
 

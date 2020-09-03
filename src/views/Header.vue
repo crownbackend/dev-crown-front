@@ -30,8 +30,8 @@
               <b-navbar-item href="#">
                   Forum
               </b-navbar-item>
-              <b-navbar-item href="#">
-                <SearchMenu/>
+              <b-navbar-item title="Rechercher" tag="router-link" :to="{ name: 'search' }">
+                <i class="fas fa-search fa-2x"></i>
               </b-navbar-item>
           </template>
           <template slot="end">
@@ -64,10 +64,8 @@
 </template>
 
 <script>
-    import SearchMenu from "../components/search/SearchMenu";
     export default {
         name: "Header",
-        components: {SearchMenu},
         data() {
             return {
                 username: null
@@ -87,9 +85,7 @@
             logout: function () {
                 this.$store.dispatch('logout')
                     .then(() => {
-                        this.$router.push({path: "/"}).catch(() => {
-
-                        })
+                        this.$router.push({path: "/"}).catch(() => {})
                     })
             },
         }
