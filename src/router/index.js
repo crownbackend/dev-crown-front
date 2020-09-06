@@ -23,6 +23,8 @@ const error404 = () => import("../components/error/Error404")
 const profile = () => import("../components/profile/Profile")
 const editProfile = () => import("../components/profile/Edit")
 const Search = () => import("../components/search/Search")
+const Forum = () => import("../components/forum/Forum")
+const showForum = () => import("../components/forum/Show")
 
 const routes = [
   {
@@ -169,6 +171,20 @@ const routes = [
       title: "Recherche",
       description: "Rechercher sur le site web les ressources qui vous intéresse !"
     }
+  },
+  {
+    path: "/forum",
+    name: "forum",
+    component: Forum,
+    meta: {
+      title: "Forum",
+      description: "Bienvenu sur le forum !"
+    }
+  },
+  {
+    path: "/forum/:id",
+    name: "showForum",
+    component: showForum
   }
 ]
 

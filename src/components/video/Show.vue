@@ -174,7 +174,7 @@
                 formEdit: false
             }
         },
-        mounted() {
+        created() {
             VideoApi.getVideo(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
                     this.video = response.data.video

@@ -82,7 +82,7 @@
                 showMore: false
             }
         },
-        mounted() {
+        created() {
             TechnologyApi.getTechnology(this.$route.params.id, this.$route.params.slug)
                 .then(response => {
                     this.technology = response.data.technology

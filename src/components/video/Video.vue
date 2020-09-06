@@ -79,7 +79,7 @@
                 showMore: null
             }
         },
-        mounted() {
+        created() {
             VideoApi.getVideos()
                 .then(response => {
                     this.videos = response.data.videos

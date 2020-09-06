@@ -27,7 +27,7 @@
               <b-navbar-item tag="router-link" :to="{ name: 'Playlist' }">
                   Playliste
               </b-navbar-item>
-              <b-navbar-item href="#">
+              <b-navbar-item tag="router-link" :to="{ name: 'forum' }">
                   Forum
               </b-navbar-item>
               <b-navbar-item title="Rechercher" tag="router-link" :to="{ name: 'search' }">

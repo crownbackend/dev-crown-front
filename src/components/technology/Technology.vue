@@ -48,7 +48,7 @@
                 showMore: false
             }
         },
-        mounted() {
+        created() {
             TechnologyApi.getTechnologies()
                 .then(response => {
                     this.technologies = response.data.technologies
