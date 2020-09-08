@@ -50,7 +50,7 @@
             <td v-else>
             </td>
             <td>
-              <router-link to="/">
+              <router-link :to="{name: 'showTopic', params: {slug: topic.slug, id: topic.id}}">
                 {{topic.title}}
               </router-link>
               <br>

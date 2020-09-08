@@ -25,6 +25,7 @@ const editProfile = () => import("../components/profile/Edit")
 const Search = () => import("../components/search/Search")
 const Forum = () => import("../components/forum/Forum")
 const showForum = () => import("../components/forum/Show")
+const showTopic = () => import("../components/topic/Topic")
 
 const routes = [
   {
@@ -185,6 +186,11 @@ const routes = [
     path: "/forum/:slug/:id",
     name: "showForum",
     component: showForum
+  },
+  {
+    path: "/forum/topics/:slug/:id",
+    name: "showTopic",
+    component: showTopic
   }
 ]
 
