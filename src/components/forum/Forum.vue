@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-4">
         <div class="subtitle is-3">
-          <router-link :to="{ name: 'showForum', params: {id: forum.id}}">
+          <router-link :to="{ name: 'showForum', params: {id: forum.id, slug: forum.slug}}">
             {{forum.name}}
           </router-link>
         </div>

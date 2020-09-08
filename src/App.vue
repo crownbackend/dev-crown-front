@@ -64,4 +64,11 @@
     background-color: #D2D2D2;
   }
 
+  .danger {
+    color: #e74a3b;
+  }
+  .success {
+    color: #1cc88a;
+  }
+
 </style>

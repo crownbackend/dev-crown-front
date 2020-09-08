@@ -182,7 +182,7 @@ const routes = [
     }
   },
   {
-    path: "/forum/:id",
+    path: "/forum/:slug/:id",
     name: "showForum",
     component: showForum
   }

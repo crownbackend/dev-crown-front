@@ -10,8 +10,12 @@ class ForumApi {
         return axios.get(Vue.prototype.$hostName+"/forum")
     }
 
-    getForum(id) {
-        return axios.get(Vue.prototype.$hostName+"/forum/"+id)
+    getForum(id, slug) {
+        return axios.get(Vue.prototype.$hostName+"/forum/"+id+"/"+slug)
+    }
+
+    getLoadMoreTopics(date, id) {
+        return axios.get(Vue.prototype.$hostName+"/topics/show/more/"+date+"/"+id)
     }
 }
 export default new ForumApi();

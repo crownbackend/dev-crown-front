@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-2">
           <figure class="image is-128x128">
-            <img v-bind:src="getImageForum(forum.imageFile)">
+            <img v-bind:src="getImageForum(forum.imageFile)" :alt="forum.imageFile">
           </figure>
         </div>
         <div class="col-md-2">
@@ -13,10 +13,13 @@
             {{forum.name}}
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="subtitle is-5">
             {{forum.description}}
           </div>
+        </div>
+        <div class="col-md-4">
+          <button class="button is-dark">Ajouter un sujet</button>
         </div>
       </div>
     </div>
@@ -27,31 +30,44 @@
           <thead>
           <tr>
             <th>Résolut</th>
+            <th>Fermer</th>
             <th>Sujets</th>
             <th>Réponses</th>
             <th>Dernier message</th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="topic in forum.topics" v-bind:key="topic.id">
-            <td v-if="topic.resolve == 1">
-              <i class="fas fa-check-circle"></i>
+          <tr v-for="topic in topics" v-bind:key="topic.id">
+            <td title="Sujet Résolu" v-if="topic.resolve == 1">
+              <i class="fas fa-check-circle success"></i>
+            </td>
+            <td v-else title="Non résolu">
+              <i class="far fa-circle"></i>
+            </td>
+            <td v-if="topic.close == 1">
+              <i class="far fa-times-circle danger"></i>
             </td>
             <td v-else>
-              <i class="far fa-circle"></i>
             </td>
             <td>
               <router-link to="/">
                 {{topic.title}}
               </router-link>
+              <br>
+              <div class="time">
+                {{topic.createdAt|formatDate}}
+              </div>
             </td>
             <td>
-              4
+              {{topic.responses.length}}
             </td>
             <td>last</td>
           </tr>
           </tbody>
         </table>
+      </div>
+      <div class="has-text-centered plus" v-if="showMore">
+        <button class="button is-dark" @click="showMoreTopics()">Voir plus de sujets</button>
       </div>
     </div>
   </div>
@@ -59,27 +75,65 @@
 
 <script>
   import ForumApi from "@/services/ForumApi";
+  import moment from "moment";
 
   export default {
     name: "show",
     data() {
       return {
-        forum: null
+        forum: null,
+        topics: [],
+        showMore: null
       }
     },
     created() {
-      ForumApi.getForum(this.$route.params.id)
+      ForumApi.getForum(this.$route.params.id, this.$route.params.slug)
         .then(response => {
           console.log(response)
-          this.forum = response.data
-          document.title = response.data.name
+          this.forum = response.data.forum
+          this.topics = response.data.topics
+          if(this.topics.length >= 10) {
+            this.showMore = true
+          }
+          document.title = response.data.forum.name
         })
-        .catch(console.error)
+        .catch(() => {
+          alert("Erreur serveur !")
+        })
     },
     methods: {
       getImageForum(name) {
         return this.$hostImages + "/forum/" + name;
+      },
+      showMoreTopics() {
+        ForumApi.getLoadMoreTopics(this.topics[this.topics.length - 1].createdAt, this.$route.params.id)
+          .then(response => {
+            console.log(response)
+            this.topics = this.topics.concat(response.data.topics)
+            if(response.data.topics.length === 0) {
+              this.showMore = false
+            }
+          })
+          .catch(() => {
+            alert("Erreur serveur !")
+          })
+      }
+    },
+    filters: {
+      formatDate(value) {
+        return moment(value).fromNow()
       }
     }
   }
 </script>
+
+<style>
+  .time {
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  .plus {
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+</style>
