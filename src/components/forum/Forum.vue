@@ -31,10 +31,10 @@
         </div>
       </div>
       <div class="col-md-3">
-        <div v-for="last in forum.topics.slice(-1)" v-bind:key="last.id">
-          <a href="">
-            {{last.title}}
-          </a>
+        <div v-for="topic in forum.topics.slice(-1)" v-bind:key="topic.id">
+          <router-link :to="{name: 'showTopic', params: {slug: topic.slug, id: topic.id}}">
+            {{topic.title}}
+          </router-link>
         </div>
       </div>
     </div>
@@ -57,7 +57,6 @@
     created() {
       ForumApi.getForums()
         .then(response => {
-          console.log(response)
           this.forums = response.data.forums
         })
         .catch(() => {

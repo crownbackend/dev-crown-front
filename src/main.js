@@ -5,8 +5,10 @@ import store from './store'
 import Buefy from 'buefy'
 import moment from "moment";
 import axios from "axios";
+import VueHighlightJS from 'vue-highlightjs'
 
 Vue.use(Buefy)
+Vue.use(VueHighlightJS)
 
 if(localStorage.getItem('token')) {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')

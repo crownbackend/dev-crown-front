@@ -61,7 +61,9 @@
             <td>
               {{topic.responses.length}}
             </td>
-            <td>last</td>
+            <td v-for="response in topic.responses.slice(-1)" v-bind:key="response.id">
+              {{response.user.username}}
+            </td>
           </tr>
           </tbody>
         </table>

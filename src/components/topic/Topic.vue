@@ -1,11 +1,78 @@
 <template>
-  <div>
-    topic
+  <div v-if="topic">
+    <hr>
+    <div class="container">
+      <h1 class="has-text-centered title is-2">
+        {{topic.title}}
+      </h1>
+      <div class="notification">
+        <figure class="image img-avatar">
+          <img :src="getImageUrl(topic.user.avatar, 'avatars')" :alt="topic.user.avatar">
+        </figure>
+        <div>Ecrit par <span class="time">{{topic.user.username}}</span> <span class="time">{{topic.createdAt|formatDate}}</span></div>
+        <br>
+        <p v-html="topic.description" class="content"></p>
+      </div>
+      <hr>
+      <div class="title is-3">{{topic.responses.length}} Réponses</div>
+      <hr>
+      <div v-for="response in topic.responses" v-bind:key="response.id">
+        <div class="notification">
+          <figure class="image img-avatar">
+            <img :src="getImageUrl(response.user.avatar, 'avatars')" :alt="response.user.avatar">
+          </figure>
+          <div>Ecrit par {{response.user.username}} {{response.createdAt|formatDate}}</div>
+          <p v-html="response.content" class="content"></p>
+        </div>
+        <hr>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import ForumApi from "@/services/ForumApi";
+  import moment from "moment";
+
   export default {
-    name: "Topic"
+    name: "Topic",
+    data() {
+      return {
+        topic: null
+      }
+    },
+    created() {
+      ForumApi.getTopic(this.$route.params.id, this.$route.params.slug)
+        .then(response => {
+          console.log(response)
+          this.topic = response.data.topic
+          document.title = response.data.topic.title
+        })
+        .catch(console.error)
+    },
+    methods: {
+      getImageUrl(name, docs) {
+        return this.$hostImages + "/"+docs+"/" + name;
+      },
+    },
+    filters: {
+      formatDate(value) {
+        return moment(value).fromNow()
+      }
+    }
   }
 </script>
+
+<style>
+.img-avatar {
+  width: 50px;
+  height: 50px;
+}
+.notification {
+  background-color: #D2D2D2;
+}
+.time {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+</style>

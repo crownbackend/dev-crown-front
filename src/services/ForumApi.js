@@ -17,5 +17,9 @@ class ForumApi {
     getLoadMoreTopics(date, id) {
         return axios.get(Vue.prototype.$hostName+"/topics/show/more/"+date+"/"+id)
     }
+
+    getTopic(id, slug) {
+        return axios.get(Vue.prototype.$hostName+"/topic/"+id+"/"+slug)
+    }
 }
 export default new ForumApi();
