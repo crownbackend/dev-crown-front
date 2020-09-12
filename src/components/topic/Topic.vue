@@ -11,7 +11,7 @@
         </figure>
         <div>Ecrit par <span class="time">{{topic.user.username}}</span> <span class="time">{{topic.createdAt|formatDate}}</span></div>
         <br>
-        <p v-html="topic.description" class="content"></p>
+        <p v-highlightjs v-html="topic.description" class="content"></p>
       </div>
       <hr>
       <div class="title is-3">{{topic.responses.length}} Réponses</div>
@@ -22,7 +22,7 @@
             <img :src="getImageUrl(response.user.avatar, 'avatars')" :alt="response.user.avatar">
           </figure>
           <div>Ecrit par {{response.user.username}} {{response.createdAt|formatDate}}</div>
-          <p v-html="response.content" class="content"></p>
+          <p v-highlightjs v-html="response.content" class="content"></p>
         </div>
         <hr>
       </div>

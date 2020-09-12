@@ -46,7 +46,7 @@
         <hr>
         <div class="row">
             <div class="col-md-8">
-                <p v-html="video.description" class="content"></p>
+                <p v-highlightjs v-html="video.description" class="content"></p>
             </div>
 
             <div class="col-md-4">

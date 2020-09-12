@@ -26,6 +26,7 @@ const Search = () => import("../components/search/Search")
 const Forum = () => import("../components/forum/Forum")
 const showForum = () => import("../components/forum/Show")
 const showTopic = () => import("../components/topic/Topic")
+const addTopic = () => import("../components/topic/Add")
 
 const routes = [
   {
@@ -191,6 +192,16 @@ const routes = [
     path: "/forum/topics/:slug/:id",
     name: "showTopic",
     component: showTopic
+  },
+  {
+    path: "/forums/topics/new",
+    name: "addTopic",
+    component: addTopic,
+    meta: {
+      title: "Ajouter un nouveau sujet",
+      description: "Ajouter un nouveau sujet sur le forum.",
+      requiresAuth: true
+    }
   }
 ]
 

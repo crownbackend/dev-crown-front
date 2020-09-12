@@ -21,5 +21,9 @@ class ForumApi {
     getTopic(id, slug) {
         return axios.get(Vue.prototype.$hostName+"/topic/"+id+"/"+slug)
     }
+
+    getForumList() {
+        return axios.get(Vue.prototype.$hostName+"/forums/category/list")
+    }
 }
 export default new ForumApi();

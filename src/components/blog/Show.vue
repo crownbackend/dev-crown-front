@@ -29,7 +29,7 @@
             </div>
             <hr>
             <div class="separe-content">
-                <p v-html="article.description">
+                <p v-highlightjs v-html="article.description">
                 </p>
             </div>
             <hr>

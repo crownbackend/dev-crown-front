@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <button class="button is-dark">Ajouter un sujet</button>
+          <button class="button is-dark" @click="redirectAddTopic()">Ajouter un sujet</button>
         </div>
       </div>
     </div>
@@ -119,6 +119,13 @@
           .catch(() => {
             alert("Erreur serveur !")
           })
+      },
+      redirectAddTopic() {
+        if(!localStorage.getItem('token')) {
+          this.$buefy.notification.open('Il faut être connecté pour ajouter un nouveau sujet !')
+        } else {
+          this.$router.push({name: "addTopic", query: {forum: this.$route.params.id}})
+        }
       }
     },
     filters: {
