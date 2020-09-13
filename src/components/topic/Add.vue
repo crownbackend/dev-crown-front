@@ -10,38 +10,52 @@
           Le forum permet <strong>l'entraide</strong>, ne postez pas de sujet pour que les personnes trouve la solution à votre place !
           veuillez à bien chercher sur internet avant de poster un sujet, ça permet de ne pas polluer le forum.
           <br>
-          Pour l'upload d'images ça se passe ici : <a href="">Telecharger des images</a>
+          Pour inserez les images veuillez d'abord télécharger l'image sur le site et récupérer le lien pour l'intégrer dans la description !
+          <br>
+          Pour l'upload d'images ça se passe ici : <router-link :to="{name: 'imageUpload'}" target="_blank">Telecharger des images</router-link>
         </div>
       </article>
       <div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="field">
-              <label class="label">Titre</label>
+        <form method="post" @submit.prevent="addTopic" @change="checkFormValid">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="field">
+                <label class="label">Titre</label>
+                <div class="control">
+                  <input class="input" type="text" v-model="title" @keyup="checkTitle" placeholder="Titre de votre sujet">
+                </div>
+                <p class="help is-danger" v-if="errorTitle">{{errorTitleText}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
               <div class="control">
-                <input class="input" type="text" v-model="title" placeholder="Titre de votre sujet">
+                <label class="label">Forum</label>
+                <div class="select is-fullwidth">
+                  <select v-model="forum" @change="checkForum">
+                    <option :value="null">Selectionnez un forum</option>
+                    <option v-for="forum in forums" v-bind:key="forum.id" :value="forum.id">{{forum.name}}</option>
+                  </select>
+                </div>
+                <p class="help is-danger" v-if="errorForum">{{errorForumText}}</p>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="control">
-              <label class="label">Forum</label>
-              <div class="select is-fullwidth">
-                <select v-model="forum">
-                  <option :value="null">Selectionnez un forum</option>
-                  <option v-for="forum in forums" v-bind:key="forum.id" :value="forum.id">{{forum.name}}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <br>
+            <div class="col-md-12">
+              <br>
               <label class="label">Description</label>
-              <quill-editor style="height: 250px" :content="description" v-model="description"/>
-            <br>
-            <br>
+              <p class="help is-danger" v-if="errorDescription">{{errorDescriptionText}}</p>
+              <quill-editor style="height: 500px" @change="checkDescription" :content="description" v-model="description"/>
+              <br>
+              <br>
+            </div>
+            <div class="col-md-12">
+              <br>
+              <button class="button is-primary" :class="{'btn-valid': !formValid}" :disabled="!formValid">Créer le sujet</button>
+              <br>
+              <br>
+            </div>
           </div>
-        </div>
+        </form>
+
       </div>
     </div>
   </div>
@@ -58,25 +72,91 @@ export default {
       title: null,
       forums: [],
       forum: null,
-      description: null
+      description: null,
+      errorTitle: false,
+      errorDescription: false,
+      errorForum: false,
+      errorTitleText: null,
+      errorDescriptionText: null,
+      errorForumText: null,
+      formValid: false,
     }
   },
   created() {
     UserApi.verifyToken()
         .then(response => {
           if(response.data.token_valid == 1) {
-            console.log("oke")
+            ForumApi.getForumList()
+                .then(response => {
+                  this.forums = response.data
+                  if(this.$route.query.forum) {
+                    this.forum = this.$route.query.forum
+                  }
+                })
+                .catch(() => {
+                  this.$store.dispatch('logout')
+                  alert('Erreur serveur veuillez réssayer plus tard')
+                })
           }
         })
         .catch(() => {
           this.$store.dispatch('logout')
           alert('Erreur serveur veuillez réssayer plus tard')
+          this.$router.push({name: "Login"})
         })
-    ForumApi.getForumList()
-      .then(response => {
-        this.forums = response.data
-      })
-      .catch(console.error)
+  },
+  methods: {
+    checkTitle() {
+      if(this.title.length < 5) {
+        this.errorTitle = true
+        this.errorTitleText = "Il faut minimum 5 caractère pour le titre de votre sujet !"
+      } else if(this.title.length > 5) {
+        this.errorTitle = false
+        this.errorTitleText = null
+      }
+    },
+    checkForum() {
+      if(!this.forum) {
+        this.errorForum = true
+        this.errorForumText = "Il faut choisir un forum dans le quel vous voulez poster votre sujet !"
+      } else {
+        this.errorForum = false
+        this.errorForumText = null
+      }
+    },
+    checkDescription() {
+      if(this.description.length < 50) {
+        this.errorDescription = true
+        this.errorDescriptionText = "Pas assez de carctères pour exprimer votre problème ! il faut minimum 50 carctères ! Si vous avez du code a exposer" +
+            " utiliser l'editeur de code pour bien envlopper votre code !"
+      } else if(this.description.length > 50){
+        this.errorDescription = false
+        this.errorDescriptionText = null
+      }
+    },
+    addTopic() {
+      if(this.formValid) {
+        ForumApi.addTopic(this.title, this.forum, this.description)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(console.error)
+      }
+    },
+    checkFormValid() {
+      if(!this.errorTitle && !this.errorForum && !this.errorDescription) {
+        this.formValid = true
+      } else {
+        this.formValid = false
+      }
+    }
   }
 }
 </script>
+
+<style>
+  .btn-valid {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+</style>

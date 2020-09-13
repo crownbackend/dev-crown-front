@@ -22,6 +22,11 @@
                     Mes réponse
                 </div>
             </div>
+          <div class="row">
+            <div class="col-md-12">
+              mes images télécharger
+            </div>
+          </div>
         </div>
     </div>
 </template>

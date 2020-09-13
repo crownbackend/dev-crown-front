@@ -10,9 +10,22 @@ import VueQuillEditor from 'vue-quill-editor'
 
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
 
-Vue.use(VueQuillEditor, /* { default global options } */)
+var toolbarOptions = [
+    'bold', 'italic', 'underline', 'strike', 'link', 'code', 'video',
+  { size: [ 'small', false, 'large', 'huge' ]},
+  { 'list': 'ordered'}, { 'list': 'bullet' },
+  { 'align': [] }
+];
+
+Vue.use(VueQuillEditor, {
+  placeholder: "Décrivez ici votre code ou ce que vous cherchez à faire",
+  theme: "snow",
+  modules: {
+    toolbar: toolbarOptions
+  }
+})
+
 
 Vue.use(Buefy)
 Vue.use(VueHighlightJS)

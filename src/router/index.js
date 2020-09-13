@@ -27,6 +27,7 @@ const Forum = () => import("../components/forum/Forum")
 const showForum = () => import("../components/forum/Show")
 const showTopic = () => import("../components/topic/Topic")
 const addTopic = () => import("../components/topic/Add")
+const imageUpload = () => import("../components/image/Image")
 
 const routes = [
   {
@@ -200,6 +201,16 @@ const routes = [
     meta: {
       title: "Ajouter un nouveau sujet",
       description: "Ajouter un nouveau sujet sur le forum.",
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/images/upload",
+    name: "imageUpload",
+    component: imageUpload,
+    meta: {
+      title: "Telecharger des images pour le forum",
+      description: "Télécharger les images pour le forum.",
       requiresAuth: true
     }
   }
