@@ -35,9 +35,19 @@ class ForumApi {
     }
 
     sendImages(images) {
-        let formData = new FormData();
-        formData.append("images", images)
-        return axios.post(Vue.prototype.$hostName+"/topic/new", formData)
+        return axios.post(Vue.prototype.$hostName+"/images/upload", images,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
+
+    getImagesUser(user) {
+        return axios.get(Vue.prototype.$hostName+"/images/"+user)
+    }
+
+    deleteImage(image, userId) {
+        return axios.delete(Vue.prototype.$hostName+"/image/"+image+"/"+userId)
     }
 }
 export default new ForumApi();
