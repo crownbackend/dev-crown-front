@@ -5,9 +5,9 @@
       <h1 class="title is-2 has-text-centered">Vos images télécharger sur le forum</h1>
       <div class="modal" :class="{'is-active': active}">
         <div class="modal-background" @click="closeModal()"></div>
-        <div class="modal-content" style="width: 800px">
+        <div class="modal-content">
           <p class="image is-4by3">
-            <img :src="showImage" :alt="showImage">
+            <img :src="showImage" class="img-fluid" :alt="showImage">
           </p>
         </div>
         <button class="modal-close is-large" @click="closeModal()" aria-label="close"></button>
@@ -21,8 +21,10 @@
             {{image.name}}
           </a>
             <br>
-            Lien à copier dans la description du sujet : <strong>{{linkImage(image.name)}}</strong>
-            <i class="fas fa-trash-alt fa-lg fa-cog" @click="deleteImage(image.id)" style="float: right;"></i>
+            Lien à copier dans la description du sujet : <strong @click="select(linkImage(image.name))">{{linkImage(image.name)}}</strong>
+            <div style="float: right;">
+              <i class="fas fa-trash-alt fa-lg fa-cog" @click="deleteImage(image.id)"></i>
+            </div>
           </div>
           <hr>
         </div>
@@ -199,6 +201,13 @@ export default {
               this.$router.push({name: "Login"})
             })
       }
+    },
+    select: function(img){
+      navigator.clipboard.writeText(img)
+      this.$buefy.notification.open({
+        message: 'Lien de l\'image copié dans le press papier!',
+        type: 'is-success'
+      })
     }
   }
 }
