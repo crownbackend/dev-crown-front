@@ -91,7 +91,6 @@
     created() {
       ForumApi.getForum(this.$route.params.id, this.$route.params.slug)
         .then(response => {
-          console.log(response)
           this.forum = response.data.forum
           this.topics = response.data.topics
           if(this.topics.length >= 10) {
@@ -110,7 +109,6 @@
       showMoreTopics() {
         ForumApi.getLoadMoreTopics(this.topics[this.topics.length - 1].createdAt, this.$route.params.id)
           .then(response => {
-            console.log(response)
             this.topics = this.topics.concat(response.data.topics)
             if(response.data.topics.length === 0) {
               this.showMore = false

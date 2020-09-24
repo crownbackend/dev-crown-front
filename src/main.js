@@ -11,6 +11,9 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 
+import hljs from 'highlight.js'
+import 'highlight.js/styles/nnfx-dark.css'
+
 var toolbarOptions = [
     'bold', 'italic', 'underline', 'strike', 'link', 'code', 'video',
   { size: [ 'small', false, 'large', 'huge' ]},
@@ -22,7 +25,10 @@ Vue.use(VueQuillEditor, {
   placeholder: "Décrivez ici votre code ou ce que vous cherchez à faire",
   theme: "snow",
   modules: {
-    toolbar: toolbarOptions
+    toolbar: toolbarOptions,
+    syntax: {
+      highlight: text => hljs.highlightAuto(text).value
+    }
   }
 })
 

@@ -27,6 +27,7 @@ const Forum = () => import("../components/forum/Forum")
 const showForum = () => import("../components/forum/Show")
 const showTopic = () => import("../components/topic/Topic")
 const addTopic = () => import("../components/topic/Add")
+const editTopic = () => import("../components/topic/Edit")
 const imageUpload = () => import("../components/image/Image")
 
 const routes = [
@@ -201,6 +202,13 @@ const routes = [
     meta: {
       title: "Ajouter un nouveau sujet",
       description: "Ajouter un nouveau sujet sur le forum.",
+      requiresAuth: true
+    }
+  },{
+    path: "/forums/topics/edit/:id/:slug",
+    name: "editTopic",
+    component: editTopic,
+    meta: {
       requiresAuth: true
     }
   },

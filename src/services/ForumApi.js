@@ -26,12 +26,29 @@ class ForumApi {
         return axios.get(Vue.prototype.$hostName+"/forums/category/list")
     }
 
-    addTopic(title, forum, description) {
+    addTopic(title, forum, description, userId) {
         let formData = new FormData();
         formData.append("title", title)
         formData.append("forum", forum)
         formData.append("description", description)
+        formData.append("userId", userId)
         return axios.post(Vue.prototype.$hostName+"/topic/new", formData)
+    }
+
+    editTopic(title, forum, description, userId, close, resolve, id) {
+        let formData = new FormData();
+        formData.append("title", title)
+        formData.append("forum", forum)
+        formData.append("description", description)
+        formData.append("userId", userId)
+        formData.append("close", close)
+        formData.append("resolve", resolve)
+        formData.append('_method', 'PUT');
+        return axios.post(Vue.prototype.$hostName+"/topic/edit/"+id, formData)
+    }
+
+    getTopicEdit(id, slug) {
+        return axios.get(Vue.prototype.$hostName+"/topic/edit"+id+"/"+slug)
     }
 
     sendImages(images) {

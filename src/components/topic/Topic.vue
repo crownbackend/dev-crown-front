@@ -9,7 +9,22 @@
         <figure class="image img-avatar">
           <img :src="getImageUrl(topic.user.avatar, 'avatars')" :alt="topic.user.avatar">
         </figure>
-        <div>Ecrit par <span class="time">{{topic.user.username}}</span> <span class="time">{{topic.createdAt|formatDate}}</span></div>
+        <div>
+          Ecrit par <span class="time">{{topic.user.username}}</span>
+          <span class="time">{{topic.createdAt|formatDate}}</span>
+          <span class="time" v-if="topic.updatedAt">, dernière modification {{topic.updatedAt|formatDate}}</span>
+          <span v-if="isLoggedIn && getUser == topic.user.id">
+            <span class="icon-comment">
+            <router-link :to="{name: 'editTopic', params: {id: topic.id, slug: topic.slug}}">
+              <i class="fas fa-edit"></i>
+            </router-link>
+          </span>
+            <span class="icon-comment">
+            <i class="fas fa-trash-alt"></i>
+          </span>
+          </span>
+
+        </div>
         <br>
         <p v-highlightjs v-html="topic.description" class="content"></p>
       </div>
@@ -44,11 +59,13 @@
     created() {
       ForumApi.getTopic(this.$route.params.id, this.$route.params.slug)
         .then(response => {
-          console.log(response)
           this.topic = response.data.topic
           document.title = response.data.topic.title
         })
-        .catch(console.error)
+        .catch(() => {
+          this.$store.dispatch('logout')
+          alert('Erreur serveur veuillez réssayer plus tard')
+        })
     },
     methods: {
       getImageUrl(name, docs) {
@@ -59,7 +76,15 @@
       formatDate(value) {
         return moment(value).fromNow()
       }
-    }
+    },
+    computed: {
+      isLoggedIn(){
+        return this.$store.getters.isLoggedIn
+      },
+      getUser() {
+        return localStorage.getItem("userId")
+      }
+    },
   }
 </script>
 
@@ -74,5 +99,10 @@
 .time {
   font-size: 0.8rem;
   font-weight: bold;
+}
+
+.icon-comment {
+  margin-left: 10px;
+  cursor: pointer;
 }
 </style>
