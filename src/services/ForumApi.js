@@ -47,6 +47,10 @@ class ForumApi {
         return axios.post(Vue.prototype.$hostName+"/topic/edit/"+id, formData)
     }
 
+    deleteTopic(id) {
+        return axios.delete(Vue.prototype.$hostName+"/topic/delete/"+id)
+    }
+
     getTopicEdit(id, slug) {
         return axios.get(Vue.prototype.$hostName+"/topic/edit"+id+"/"+slug)
     }

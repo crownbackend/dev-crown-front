@@ -10,7 +10,7 @@
         <div>
             <span style="float: right" class="subtitle is-5">{{video.publishedAt|formatDate}}</span>
             <div v-if="isLoggedIn" class="download-video">
-                <button @click="downloadVideo(video.nameFileVideo)" class="button is-dark">
+                <button @click="downloadVideo(video.nameFileVideo)" v-if="verifyDateVideoDownload(video.publishedAt)" class="button is-dark">
                     Télécharger la vidéo
                     <i class="fas fa-download"></i>
                 </button>
@@ -171,7 +171,7 @@
                 formEditComment: false,
                 idChange: null,
                 commentErrorEdit: null,
-                formEdit: false
+                formEdit: false,
             }
         },
         created() {
@@ -301,7 +301,16 @@
                         this.$store.dispatch('logout')
                     }
                 })
-            }
+            },
+          verifyDateVideoDownload(date) {
+              let dateC = moment(date).format();
+              let nowD = moment().format()
+              if(nowD > dateC) {
+                return true
+              } else {
+                return false
+              }
+          }
         },
         computed: {
             isLoggedIn(){

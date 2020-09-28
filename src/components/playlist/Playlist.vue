@@ -46,14 +46,15 @@
                         this.showMore = true
                     }
                 })
-                .catch(console.error)
+                .catch(() => {
+                  alert('Erreur serveur !');
+                })
         },
         methods: {
             getLoadPlaylist() {
                 let playlist = this.playlists[this.playlists.length - 1];
                 PlaylistApi.getLoadMorePlaylists(playlist.id)
                     .then(response => {
-                        console.log(response)
                         this.playlists = this.playlists.concat(response.data)
                         if(response.data.length === 0) {
                             this.showMore = false

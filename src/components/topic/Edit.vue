@@ -115,6 +115,8 @@ export default {
               .then(response => {
                 this.title = response.data.topic.title
                 this.description = response.data.topic.description
+                this.close = response.data.topic.close
+                this.resolve = response.data.topic.resolve
                 this.forum = response.data.topic.forum.id
                 document.title = "Editer mon sujet : "+response.data.topic.title
               })
@@ -168,7 +170,6 @@ export default {
         ForumApi.editTopic(this.title, this.forum, this.description, this.userId,
             this.close, this.resolve, this.$route.params.id)
             .then(response => {
-              console.log(response)
               if(response.data.success === 1) {
                 this.$router.push({name: "showTopic", params: {slug: response.data.slug, id: response.data.topicId}})
               } else if(response.data.error) {

@@ -5,6 +5,22 @@
       <h1 class="has-text-centered title is-2">
         {{topic.title}}
       </h1>
+      <article class="message is-success" v-if="topic.resolve">
+        <div class="message-header">
+          <p><i class="far fa-check-circle"></i></p>
+        </div>
+        <div class="message-body">
+           <strong>Ce sujet est résolu.</strong>
+        </div>
+      </article>
+      <article class="message is-danger" v-if="topic.close">
+        <div class="message-header">
+          <p><i class="far fa-times-circle"></i></p>
+        </div>
+        <div class="message-body">
+          <strong>Attention ce sujet est fermer veuillez consulter un autre sujet ou en créer un nouveau.</strong>
+        </div>
+      </article>
       <div class="notification">
         <figure class="image img-avatar">
           <img :src="getImageUrl(topic.user.avatar, 'avatars')" :alt="topic.user.avatar">
@@ -15,13 +31,13 @@
           <span class="time" v-if="topic.updatedAt">, dernière modification {{topic.updatedAt|formatDate}}</span>
           <span v-if="isLoggedIn && getUser == topic.user.id">
             <span class="icon-comment">
-            <router-link :to="{name: 'editTopic', params: {id: topic.id, slug: topic.slug}}">
-              <i class="fas fa-edit"></i>
-            </router-link>
-          </span>
-            <span class="icon-comment">
-            <i class="fas fa-trash-alt"></i>
-          </span>
+              <router-link :to="{name: 'editTopic', params: {id: topic.id, slug: topic.slug}}">
+                <i class="fas fa-edit"></i>
+              </router-link>
+            </span>
+            <span class="icon-comment" @click="deleteTopic(topic.id)">
+              <i class="fas fa-trash-alt"></i>
+            </span>
           </span>
 
         </div>
@@ -71,6 +87,24 @@
       getImageUrl(name, docs) {
         return this.$hostImages + "/"+docs+"/" + name;
       },
+      deleteTopic(id) {
+        if(confirm('Voulez vous vraiment supprimer le Topic ?')) {
+          ForumApi.deleteTopic(id)
+              .then(response => {
+                if(response.data.success === 1) {
+                  this.$buefy.notification.open({
+                    message: 'Topic supprimer avec succées',
+                    type: 'is-success'
+                  })
+                  this.$router.push({name: "Home"})
+                }
+              })
+              .catch(() => {
+                this.$store.dispatch('logout')
+                alert('Erreur serveur veuillez réssayer plus tard')
+              })
+        }
+      }
     },
     filters: {
       formatDate(value) {

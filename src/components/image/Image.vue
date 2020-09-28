@@ -136,7 +136,6 @@ export default {
     sendImages() {
       ForumApi.sendImages(this.files)
         .then(response => {
-          console.log(response)
           if(response.data.success === 1) {
             this.images = [];
             this.userImages = response.data.images

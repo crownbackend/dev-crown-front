@@ -110,12 +110,12 @@
                            <i class="far fa-circle"></i>
                        </td>
                        <td>
-                           <router-link to="/">
+                           <router-link :to="{name: 'showForum', params: {slug: topic.forum.slug, id: topic.forum.id}}">
                                {{topic.forum.name}}
                            </router-link>
                        </td>
                        <td>
-                           <router-link to="/">
+                           <router-link :to="{name: 'showTopic', params: {slug: topic.slug, id: topic.id}}">
                                {{topic.title}}
                            </router-link>
                        </td>

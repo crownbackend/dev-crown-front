@@ -96,13 +96,14 @@
                 let article = this.articles[this.articles.length - 1];
                 BlogApi.getLastArticles(article.publishedAt)
                     .then(response => {
-                        console.log(response)
                         this.articles = this.articles.concat(response.data)
                         if(response.data.length === 0) {
                             this.showMore = false
                         }
                     })
-                    .catch(console.error)
+                    .catch(() => {
+                      alert('Erreur serveur !');
+                    })
             }
         }
     }

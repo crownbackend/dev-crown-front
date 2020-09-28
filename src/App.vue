@@ -71,4 +71,20 @@
     color: #1cc88a;
   }
 
+  @media (prefers-color-scheme: dark) {
+
+    html {
+      filter: invert(1) hue-rotate(.5turn);
+    }
+
+    img {
+      filter: invert(1) hue-rotate(.5turn);
+    }
+
+    img:not(:hover) {
+      opacity: .7;
+      transition: opacity .25s ease-in-out;
+    }
+  }
+
 </style>
