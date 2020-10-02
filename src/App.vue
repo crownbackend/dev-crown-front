@@ -71,6 +71,10 @@
     color: #1cc88a;
   }
 
+  .borderTextarea {
+    border: solid #7f7f7f 2px;
+  }
+
   @media (prefers-color-scheme: dark) {
 
     html {

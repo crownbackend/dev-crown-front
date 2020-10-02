@@ -70,5 +70,13 @@ class ForumApi {
     deleteImage(image, userId) {
         return axios.delete(Vue.prototype.$hostName+"/image/"+image+"/"+userId)
     }
+
+    addResponse(description, userId, topicId) {
+        let formData = new FormData();
+        formData.append("topicId", topicId)
+        formData.append("description", description)
+        formData.append("userId", userId)
+        return axios.post(Vue.prototype.$hostName+"/responses", formData)
+    }
 }
 export default new ForumApi();

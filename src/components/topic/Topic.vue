@@ -42,21 +42,11 @@
 
         </div>
         <br>
-        <p v-highlightjs v-html="topic.description" class="content"></p>
+        <p v-highlightjs v-html="topic.description"></p>
       </div>
       <hr>
       <div class="title is-3">{{topic.responses.length}} Réponses</div>
-      <hr>
-      <div v-for="response in topic.responses" v-bind:key="response.id">
-        <div class="notification">
-          <figure class="image img-avatar">
-            <img :src="getImageUrl(response.user.avatar, 'avatars')" :alt="response.user.avatar">
-          </figure>
-          <div>Ecrit par {{response.user.username}} {{response.createdAt|formatDate}}</div>
-          <p v-highlightjs v-html="response.content" class="content"></p>
-        </div>
-        <hr>
-      </div>
+      <Response :responses="topic.responses"/>
     </div>
   </div>
 </template>
@@ -64,9 +54,11 @@
 <script>
   import ForumApi from "@/services/ForumApi";
   import moment from "moment";
+  import Response from "@/components/response/Response";
 
   export default {
     name: "Topic",
+    components: {Response},
     data() {
       return {
         topic: null

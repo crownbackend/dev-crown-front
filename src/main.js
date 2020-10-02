@@ -6,33 +6,9 @@ import Buefy from 'buefy'
 import moment from "moment";
 import axios from "axios";
 import VueHighlightJS from 'vue-highlightjs'
-import VueQuillEditor from 'vue-quill-editor'
+import VuePellEditor from 'vue-pell-editor'
 
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-
-import hljs from 'highlight.js'
-import 'highlight.js/styles/nnfx-dark.css'
-
-var toolbarOptions = [
-    'bold', 'italic', 'underline', 'strike', 'link', 'code', 'video',
-  { size: [ 'small', false, 'large', 'huge' ]},
-  { 'list': 'ordered'}, { 'list': 'bullet' },
-  { 'align': [] }
-];
-
-Vue.use(VueQuillEditor, {
-  placeholder: "Décrivez ici votre code ou ce que vous cherchez à faire",
-  theme: "snow",
-  modules: {
-    toolbar: toolbarOptions,
-    syntax: {
-      highlight: text => hljs.highlightAuto(text).value
-    }
-  }
-})
-
-
+Vue.use(VuePellEditor)
 Vue.use(Buefy)
 Vue.use(VueHighlightJS)
 
@@ -40,9 +16,12 @@ if(localStorage.getItem('token')) {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
 }
 Vue.config.productionTip = false
+// variable global api
 Vue.prototype.$hostName = process.env.VUE_APP_HOSTNAME
 Vue.prototype.$hostImages = process.env.VUE_APP_HOSTIMAGE
 Vue.prototype.$hostVideos = process.env.VUE_APP_VIDEOS
+
+// moment config show time
 moment.locale('fr', {
   months : 'janvier_février_mars_avril_mai_juin_juillet_août_septembre_octobre_novembre_décembre'.split('_'),
   weekdays : 'dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi'.split('_'),
