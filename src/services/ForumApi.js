@@ -78,5 +78,21 @@ class ForumApi {
         formData.append("userId", userId)
         return axios.post(Vue.prototype.$hostName+"/responses", formData)
     }
+
+    editResponse(id, content, topicId) {
+        let formData = new FormData();
+        formData.append("content", content)
+        formData.append("topicId", topicId)
+        formData.append('_method', 'PUT');
+        return axios.post(Vue.prototype.$hostName+"/response/"+id+"/edit", formData)
+    }
+
+    deleteResponse(id) {
+        return axios.delete(Vue.prototype.$hostName+"/response/"+id+"/delete")
+    }
+
+    goodAnswer(id) {
+        return axios.post(Vue.prototype.$hostName+"/response/answer/"+id)
+    }
 }
 export default new ForumApi();

@@ -15,49 +15,25 @@
           <div v-if="resultSearch">
           <div class="row">
             <div class="col-md-12">
-              <h1 class="title is-1 has-text-centered">
-                videos
-              </h1>
-              <div class="row">
-                <div class="col-md-4" v-for="video in videos" v-bind:key="video.id">
-                  <div class="card">
-                    <div class="card-image">
-                      <figure class="image is-4by3">
-                        <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
-                          <img v-bind:src="getImageUrl(video.imageFile, 'videos')" :alt="video.imageFile">
-                        </router-link>
-                      </figure>
-                    </div>
-                    <div class="card-content">
-                      <div class="media">
-                        <div class="media-content">
-                          <router-link :to="{ name: 'showTechnology', params: {slug: video.technology.slug, id: video.technology.id}}" v-if="video.technology">
-                            <figure style="float: right" v-if="video.technology">
-                              <img width="100" height="100" v-bind:src="getImageTechnoUrl(video.technology.imageFile)" :alt="video.technology.imageFile">
-                            </figure>
-                          </router-link>
-                          <Favorie :video-id="video.id" :favored-video="video.favored"/>
-                          <div v-if="video.playliste">Playliste :
-                            <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
-                              {{video.playliste.name}}
-                            </router-link>
-                          </div>
-                          <br>
-                          <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
-                            <p class="title is-4">
-                              {{video.title}}
-                            </p>
-                          </router-link>
-                        </div>
-                      </div>
-
-                      <div class="content">
-                        <p v-html="video.description.slice(0, 100)">
-                        </p>
-                        <br>
-                        <time datetime="2016-1-1">{{video.publishedAt |formatDate}}</time>
-                      </div>
-                    </div>
+              <div class="videoCard" v-for="video in videos" v-bind:key="video.id">
+                <div class="row">
+                  <div class="col-md-4">
+                    <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
+                      <img v-bind:src="getImageUrl(video.imageFile, 'videos')" style="width: 400px; height: 200px" :alt="video.imageFile">
+                    </router-link>
+                  </div>
+                  <div class="col-md-8">
+                    <Favorie style="float: right" :video-id="video.id" :favored-video="video.favored"/>
+                    <h1 class="title is-2">
+                      <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
+                        {{video.title}}
+                      </router-link>
+                    </h1>
+                    <p v-html="video.description.slice(0, 300)">
+                    </p>
+                    <span style="float: right; padding-top: 50px">
+                  <time datetime="2016-1-1">{{video.publishedAt |formatDate}}</time>
+                </span>
                   </div>
                 </div>
               </div>
@@ -203,4 +179,11 @@
     .padding {
         padding-top: 50px;
     }
+
+    .videoCard {
+      border: #7f7f7f solid 2px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
 </style>

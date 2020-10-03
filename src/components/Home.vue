@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Partez à la découverte du développement web avec un contenu éllaboré pour tous, gratuitement !

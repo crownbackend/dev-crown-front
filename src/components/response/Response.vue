@@ -18,11 +18,53 @@
     <hr>
     <div v-for="response in responses" v-bind:key="response.id">
       <div class="notification">
+        <article class="message is-success" v-if="response.resolve">
+          <div class="message-header">
+            <p><i class="far fa-check-circle"></i></p>
+          </div>
+          <div class="message-body">
+            <strong>Cette réponse est la bonne.</strong>
+          </div>
+        </article>
         <figure class="image img-avatar">
           <img :src="getImageUrl(response.user.avatar, 'avatars')" :alt="response.user.avatar">
         </figure>
-        <div>Ecrit par {{response.user.username}} {{response.createdAt|formatDate}}</div>
+        <div>
+          Ecrit par <strong>{{response.user.username}} {{response.createdAt|formatDate}}</strong>
+          <span v-if="response.updatedAt">
+             Dernière modification
+            {{response.updatedAt|formatDate}},
+          </span>
+          <span v-if="isLoggedIn && getUser == response.user.id">
+            <span class="icon-comment" @click.prevent="editResponse(response.id)">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span class="icon-comment" @click="deleteResponse(response.id)">
+              <i class="fas fa-trash-alt"></i>
+            </span>
+          </span>
+          <span style="float: right" @click="goodAnswer(response.id)" v-if="!response.resolve">
+            <button class="button is-success is-outlined">La bonne réponse ?</button>
+          </span>
+        </div>
         <p v-highlightjs v-html="response.content" class="content"></p>
+        <div v-if="formEdit && response.id === responseId">
+          <form @submit.prevent="sendEditResponse(response.id, response.content)" >
+            <div class="borderTextarea"  style="background-color: white">
+              <vue-pell-editor
+                  v-model="response.content"
+                  :placeholder="editorPlaceholder"
+                  default-paragraph-separator="p"
+                  :actions="editorOptions"
+              />
+            </div>
+            <br/>
+            <button class="button is-primary">
+              Editer
+            </button>
+          </form>
+        </div>
+
       </div>
       <hr>
     </div>
@@ -66,7 +108,9 @@ export default {
           }
         }
       ],
-      userId: null
+      userId: null,
+      formEdit: false,
+      responseId: null
     }
   },
   mounted() {
@@ -79,7 +123,6 @@ export default {
             if(response.data.token_valid == 1) {
               ForumApi.addResponse(this.description, this.userId, this.$route.params.id)
                   .then(response => {
-                    console.log(response)
                     if(response.data.error) {
                       this.$buefy.dialog.alert({
                         title: 'Error',
@@ -134,6 +177,63 @@ export default {
         })
       }
     },
+    editResponse(id) {
+      this.responseId = id
+      this.formEdit = true
+    },
+    sendEditResponse(id, content) {
+      ForumApi.editResponse(id, content, this.$route.params.id)
+        .then(response => {
+          if(response.data.error) {
+            this.$buefy.dialog.alert({
+              title: 'Error',
+              message: "Attention il faut minimum 50 caractère pour rédiger une réponse !",
+              type: 'is-danger',
+              hasIcon: true,
+              icon: 'times-circle',
+              iconPack: 'fa',
+              ariaRole: 'alertdialog',
+              ariaModal: true
+            })
+          } else {
+            this.$parent.topic.responses = response.data.responses
+            this.formEdit = false
+          }
+        })
+          .catch(() => {
+            this.$store.dispatch('logout')
+            alert('Erreur serveur veuillez réssayer plus tard')
+            this.$router.push({name: "Login"})
+          })
+    },
+    deleteResponse(id) {
+      if(confirm('Voulez vous vraiment supprimer ce commentaire ?')) {
+        ForumApi.deleteResponse(id)
+          .then(response => {
+            this.$parent.topic.responses = response.data.responses
+          })
+            .catch(() => {
+              this.$store.dispatch('logout')
+              alert('Erreur serveur veuillez réssayer plus tard')
+              this.$router.push({name: "Login"})
+            })
+      }
+    },
+    goodAnswer(id) {
+      ForumApi.goodAnswer(id)
+        .then(response => {
+          this.$parent.topic.responses = response.data.responses
+        })
+        .catch(console.error)
+    }
+  },
+  computed: {
+    isLoggedIn(){
+      return this.$store.getters.isLoggedIn
+    },
+    getUser() {
+      return localStorage.getItem("userId")
+    }
   },
   filters: {
     formatDate(value) {
