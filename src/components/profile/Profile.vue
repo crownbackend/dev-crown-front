@@ -1,19 +1,19 @@
 <template>
     <div v-if="user">
         <div class="container">
-            <div class="title is-2 profile">
-                Mon profile
-            </div>
-            <div class="title is-2">
-                <router-link :to="{name: 'editProfile', params: {username: user.username}}">
-                    <i class="fas fa-edit" title="Editer"></i>
-                </router-link>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                  <hr>
-                  <div style="overflow: scroll; height: 500px">
-                    <div class="videoCard" v-for="video in videos" v-bind:key="video.id">
+          <div class="title is-2 profile">
+            Mon profile
+          </div>
+          <div class="title is-2">
+            <router-link :to="{name: 'editProfile', params: {username: user.username}}">
+              <i class="fas fa-edit" title="Editer"></i>
+            </router-link>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <hr>
+              <div style="overflow: scroll; height: 500px" v-if="videos.length !== 0">
+                <div class="videoCard" v-for="video in videos" v-bind:key="video.id">
                       <div class="row">
                         <div class="col-md-4">
                           <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
@@ -35,14 +35,16 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <hr>
-                </div>
+              </div>
+              <div v-else>
+                <h1 class="title is-2">Aucune vidéo ajouter à vos favories</h1>
+              </div>
+              <hr>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    Mes sujets
-                  <table class="table">
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table" v-if="topics.length !== 0">
                     <thead>
                     <tr>
                       <th>Résolut</th>
@@ -71,42 +73,47 @@
                     </tr>
                     </tbody>
                   </table>
-                  <hr>
-                </div>
-                <div class="col-md-12">
-                    Les sujets ou j'ai répondu
-                  <table class="table">
-                    <thead>
-                    <tr>
-                      <th>Résolut</th>
-                      <th>Forum</th>
-                      <th>Sujet</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="topic in responsesTopic" v-bind:key="topic.id">
-                      <td v-if="topic.resolve == 1">
-                        <i class="fas fa-check-circle"></i>
-                      </td>
-                      <td v-else>
-                        <i class="far fa-circle"></i>
-                      </td>
-                      <td>
-                        <router-link :to="{name: 'showForum', params: {slug: topic.forum.slug, id: topic.forum.id}}">
-                          {{topic.forum.name}}
-                        </router-link>
-                      </td>
-                      <td>
-                        <router-link :to="{name: 'showTopic', params: {slug: topic.slug, id: topic.id}}">
-                          {{topic.title}}
-                        </router-link>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                  <hr>
-                </div>
+              <div v-else>
+                <h1 class="title is-2">Aucun sujet créer </h1>
+              </div>
+              <hr>
             </div>
+            <div class="col-md-12">
+              <table class="table" v-if="responsesTopic.length !== 0">
+                <thead>
+                <tr>
+                  <th>Résolut</th>
+                  <th>Forum</th>
+                  <th>Sujet</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="topic in responsesTopic" v-bind:key="topic.id">
+                  <td v-if="topic.resolve == 1">
+                    <i class="fas fa-check-circle"></i>
+                  </td>
+                  <td v-else>
+                    <i class="far fa-circle"></i>
+                  </td>
+                  <td>
+                    <router-link :to="{name: 'showForum', params: {slug: topic.forum.slug, id: topic.forum.id}}">
+                      {{topic.forum.name}}
+                    </router-link>
+                  </td>
+                  <td>
+                    <router-link :to="{name: 'showTopic', params: {slug: topic.slug, id: topic.id}}">
+                      {{topic.title}}
+                    </router-link>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div v-else>
+                <h1 class="title is-2">Aucune réponse posté sur le forum</h1>
+              </div>
+              <hr>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12">
               <router-link :to="{name: 'imageUpload'}" target="_blank">
@@ -114,6 +121,8 @@
               </router-link>
             </div>
           </div>
+          <br>
+          <button class="button is-fullwidth is-danger" @click="deleteAccount">Supprimer mon compte</button>
         </div>
     </div>
 </template>
@@ -154,23 +163,42 @@ export default {
           // topics
           UserApi.getTopics(this.userId)
               .then(response => {
-                console.log(response)
                 this.topics = response.data.topics
                 this.responsesTopic = response.data.topicsResponses
               })
-              .catch(console.error)
+              .catch(() => {
+                this.$store.dispatch('logout')
+                alert('Erreur serveur veuillez réssayer plus tard')
+                this.$router.push({name: "Login"})
+              })
         })
-        .catch(err => {
-          if(err.response.status == 500) {
-            this.$store.dispatch('logout')
-          } else {
-            this.$store.dispatch('logout')
-          }
+        .catch(() => {
+          this.$store.dispatch('logout')
+          alert('Erreur serveur veuillez réssayer plus tard')
+          this.$router.push({name: "Login"})
         })
   },
   methods: {
     getImageUrl(name, docs) {
       return this.$hostImages + "/"+docs+"/" + name;
+    },
+    deleteAccount() {
+      if(confirm("Êtes-vous sûr de supprimer votre compte ? ce ci va supprimer tout vos sujet dans le forum ansi que vos images et videos favorie")) {
+        UserApi.deleteAccount(this.userId)
+            .then(response => {
+              if(response.data.success === 1) {
+                this.$store.dispatch('logout')
+                alert('Bonne continuation pour la suite !')
+                this.$router.push({name: "Home"})
+              }
+            })
+            .catch(() => {
+              this.$store.dispatch('logout')
+              alert('Erreur serveur veuillez réssayer plus tard')
+              this.$router.push({name: "Login"})
+            })
+      }
+
     }
   },
   filters: {

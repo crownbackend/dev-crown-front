@@ -71,6 +71,10 @@ class UserApi {
     getTopics(id) {
         return axios.get(Vue.prototype.$hostName+"/profile/topics/"+id)
     }
+
+    deleteAccount(id) {
+            return axios.delete(Vue.prototype.$hostName+"/profile/delete/account/"+id)
+    }
 }
 
 export default new UserApi();

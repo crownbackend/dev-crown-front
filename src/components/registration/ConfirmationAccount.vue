@@ -5,7 +5,7 @@
                 Votre compte est maintenant actif
             </h1>
             <br>
-            <p class="subtitle is-3">Pour vous connecter veuillez <router-link :to="{name: 'Register'}">cliquer ici</router-link></p>
+            <p class="subtitle is-3">Pour vous connecter veuillez <router-link :to="{name: 'Login'}">cliquer ici</router-link></p>
         </div>
         <div class="notification" v-if="errorConfirmation">
             <h1 class="title is-2">Une erreur est survenu lors de l'activation de votre compte veuillez contacter l'administrateur du site !</h1>

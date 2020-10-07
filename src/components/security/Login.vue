@@ -63,6 +63,11 @@
                 formValid: false
             }
         },
+        mounted() {
+          if(localStorage.getItem("token")) {
+            this.$router.push({name: "Home"})
+          }
+        },
         methods: {
             checkFormValid() {
                 if(this.username && this.password) {

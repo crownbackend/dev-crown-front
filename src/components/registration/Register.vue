@@ -85,7 +85,12 @@
                 formRegister: true
             }
         },
-        methods: {
+      mounted() {
+          if(localStorage.getItem("token")) {
+            this.$router.push({name: "Home"})
+          }
+      },
+      methods: {
             checkFormValid() {
                 if(this.emailGood && this.usernameGood && this.passwordGood) {
                     this.formValid = true
