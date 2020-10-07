@@ -63,6 +63,14 @@ class UserApi {
         formData.append("_method", "PUT")
         return axios.post(Vue.prototype.$hostName+"/profile/edit/", formData);
     }
+
+    getVideo(id) {
+        return axios.get(Vue.prototype.$hostName+"/profile/videos/"+id)
+    }
+
+    getTopics(id) {
+        return axios.get(Vue.prototype.$hostName+"/profile/topics/"+id)
+    }
 }
 
 export default new UserApi();

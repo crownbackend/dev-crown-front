@@ -15,25 +15,27 @@
           <div v-if="resultSearch">
           <div class="row">
             <div class="col-md-12">
-              <div class="videoCard" v-for="video in videos" v-bind:key="video.id">
-                <div class="row">
-                  <div class="col-md-4">
-                    <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
-                      <img v-bind:src="getImageUrl(video.imageFile, 'videos')" style="width: 400px; height: 200px" :alt="video.imageFile">
-                    </router-link>
-                  </div>
-                  <div class="col-md-8">
-                    <Favorie style="float: right" :video-id="video.id" :favored-video="video.favored"/>
-                    <h1 class="title is-2">
+              <div style="overflow: scroll; height: 500px">
+                <div class="videoCard" v-for="video in videos" v-bind:key="video.id">
+                  <div class="row">
+                    <div class="col-md-4">
                       <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
-                        {{video.title}}
+                        <img v-bind:src="getImageUrl(video.imageFile, 'videos')" style="width: 400px; height: 200px" :alt="video.imageFile">
                       </router-link>
-                    </h1>
-                    <p v-html="video.description.slice(0, 300)">
-                    </p>
-                    <span style="float: right; padding-top: 50px">
+                    </div>
+                    <div class="col-md-8">
+                      <Favorie style="float: right" :video-id="video.id" :favored-video="video.favored"/>
+                      <h1 class="title is-2">
+                        <router-link :to="{ name: 'videoShow', params: {slug: video.slug, id: video.id}}">
+                          {{video.title}}
+                        </router-link>
+                      </h1>
+                      <p v-html="video.description.slice(0, 300)">
+                      </p>
+                      <span style="float: right; padding-top: 50px">
                   <time datetime="2016-1-1">{{video.publishedAt |formatDate}}</time>
                 </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -179,11 +181,4 @@
     .padding {
         padding-top: 50px;
     }
-
-    .videoCard {
-      border: #7f7f7f solid 2px;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-
 </style>

@@ -75,6 +75,12 @@
     border: solid #7f7f7f 2px;
   }
 
+  .videoCard {
+    border: #7f7f7f solid 2px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
   @media (prefers-color-scheme: dark) {
 
     html {
