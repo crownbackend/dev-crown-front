@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+      <div class="pageloader" :class="{'is-active': loading}" style="background-color: #D2D2D2">
+        <span class="title" style="color: black">Chargement de la page</span>
+      </div>
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Retrouver ici toutes les vidéos de ma chaîne Youtube !
@@ -76,7 +79,8 @@
         data() {
             return {
                 videos: [],
-                showMore: null
+                showMore: null,
+                loading: true
             }
         },
         created() {
@@ -84,6 +88,7 @@
                 .then(response => {
                     this.videos = response.data.videos
                     this.showMore = true
+                    this.loading = false
                 })
                 .catch(() => {
                     alert('Erreur serveur')

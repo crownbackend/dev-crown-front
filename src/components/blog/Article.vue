@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+      <div class="pageloader" :class="{'is-active': loading}" style="background-color: #D2D2D2">
+        <span class="title" style="color: black">Chargement de la page</span>
+      </div>
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Retrouver ici tout mes articles !
@@ -63,12 +66,14 @@
             return {
                 itemsPerRow: 3,
                 articles: [],
-                showMore: false
+                showMore: false,
+                loading: true
             }
         },
         mounted() {
             BlogApi.getArticles()
                 .then(response => {
+                    this.loading = false
                     this.articles = response.data.articles
                     if(this.articles.length > 9) {
                         this.showMore = true

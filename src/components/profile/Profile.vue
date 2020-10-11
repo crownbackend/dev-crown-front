@@ -44,7 +44,8 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <table class="table" v-if="topics.length !== 0">
+              <div style="overflow: scroll; height: 500px" v-if="topics.length !== 0">
+                <table class="table">
                     <thead>
                     <tr>
                       <th>Résolut</th>
@@ -73,13 +74,15 @@
                     </tr>
                     </tbody>
                   </table>
+              </div>
               <div v-else>
                 <h1 class="title is-2">Aucun sujet créer </h1>
               </div>
               <hr>
             </div>
             <div class="col-md-12">
-              <table class="table" v-if="responsesTopic.length !== 0">
+              <div style="overflow: scroll; height: 500px" v-if="responsesTopic.length !== 0">
+                <table class="table">
                 <thead>
                 <tr>
                   <th>Résolut</th>
@@ -108,6 +111,7 @@
                 </tr>
                 </tbody>
               </table>
+              </div>
               <div v-else>
                 <h1 class="title is-2">Aucune réponse posté sur le forum</h1>
               </div>
@@ -116,13 +120,14 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <router-link :to="{name: 'imageUpload'}" target="_blank">
-                mes images télécharger
+              <router-link :to="{name: 'imageUpload'}" target="_blank" style="font-size: 2rem">
+                Mes images télécharger
               </router-link>
             </div>
           </div>
           <br>
           <button class="button is-fullwidth is-danger" @click="deleteAccount">Supprimer mon compte</button>
+          <br>
         </div>
     </div>
 </template>

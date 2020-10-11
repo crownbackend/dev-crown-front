@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+      <div class="pageloader" :class="{'is-active': loading}" style="background-color: #D2D2D2">
+        <span class="title" style="color: black">Chargement de la page</span>
+      </div>
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Partez à la découverte du développement web avec un contenu éllaboré pour tous, gratuitement !
@@ -140,17 +143,17 @@
         components: {Favorie},
         data() {
             return {
-                videos: [],
-                articles: [],
-                topics: [],
-                interval: null,
-                now: new Date(),
+              videos: [],
+              articles: [],
+              topics: [],
+              loading: true
             }
         },
         created() {
             VideoApi.getLastVideos()
                 .then(response => {
-                    this.videos = response.data.videos
+                  this.videos = response.data.videos
+                  this.loading = false
                 })
                 .catch(() => {
                     alert('Erreur serveur')
@@ -160,6 +163,7 @@
             BlogApi.getLastArticlesHome()
                 .then(response => {
                     this.articles = response.data.articles
+                    this.loading = false
                 })
                 .catch(() => {
                     alert('Erreur serveur !')
@@ -168,6 +172,7 @@
             ForumApi.getLastTopic()
                 .then(response => {
                     this.topics = response.data.topics
+                    this.loading = false
                 })
             .catch(() => {
                 alert('Erreur serveur !')

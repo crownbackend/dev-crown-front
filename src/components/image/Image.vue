@@ -149,10 +149,24 @@ export default {
             this.imagesError = response.data.imagesNotUpload
           }
         })
-        .catch(() => {
-          this.$store.dispatch('logout')
-          alert('Erreur serveur veuillez réssayer plus tard')
-          this.$router.push({name: "Login"})
+        .catch((err) => {
+          if(err.response.data.errorCountFile === 1) {
+            this.$buefy.dialog.alert({
+              title: 'Error',
+              message: "Attention vous avez uploader plus de 5 images a la fois !",
+              type: 'is-danger',
+              hasIcon: true,
+              icon: 'times-circle',
+              iconPack: 'fa',
+              ariaRole: 'alertdialog',
+              ariaModal: true
+            })
+            this.images = null
+          } else {
+            this.$store.dispatch('logout')
+            alert('Erreur serveur veuillez réssayer plus tard')
+            this.$router.push({name: "Login"})
+          }
         })
     },
     handleSelects(e) {

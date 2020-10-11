@@ -25,6 +25,7 @@
   @import "~bootstrap/dist/css/bootstrap-grid.min.css";
   @import "~buefy/dist/buefy.css";
   @import "~highlight.js/scss/solarized-light";
+  @import "~bulma-extensions/bulma-pageloader/dist/css/bulma-pageloader.min.css";
 #app {
   font-family: 'Lato', sans-serif;
   -webkit-font-smoothing: antialiased;
