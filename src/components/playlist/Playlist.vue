@@ -5,6 +5,12 @@
                 Retrouver ici toutes mes playlistes Youtube
             </h1>
         </div>
+      <div class="loading-overlay is-active" v-if="loading">
+        <div class="loading-background"></div>
+        <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+      </div>
         <div class="row">
             <div class="col-md-4" style="padding-bottom: 30px" v-for="playlist in playlists" v-bind:key="playlist.id">
                 <div class="card" >
@@ -34,14 +40,16 @@
         name: "Playlist",
         data() {
             return {
-                playlists: [],
-                showMore: false
+              playlists: [],
+              showMore: false,
+              loading: true
             }
         },
         mounted() {
             PlaylistApi.getPlaylists()
                 .then(response => {
                     this.playlists = response.data.playlists
+                    this.loading = false
                     if(this.playlists.length > 9) {
                         this.showMore = true
                     }

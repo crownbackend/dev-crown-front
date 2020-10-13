@@ -5,6 +5,12 @@
                 Retrouver ici toutes les technologies
             </h1>
         </div>
+      <div class="loading-overlay is-active" v-if="loading">
+        <div class="loading-background"></div>
+        <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+      </div>
         <div class="row">
             <div class="col-md-4" style="padding-bottom: 20px" v-for="technology in technologies" v-bind:key="technology.id">
             <br>
@@ -44,14 +50,16 @@
         name: "Technology",
         data() {
             return {
-                technologies: [],
-                showMore: false
+              technologies: [],
+              showMore: false,
+              loading: true
             }
         },
         created() {
             TechnologyApi.getTechnologies()
                 .then(response => {
                     this.technologies = response.data.technologies
+                    this.loading = false
                     if(this.technologies.length > 8) {
                         this.showMore = true
                     }

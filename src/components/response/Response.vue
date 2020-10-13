@@ -1,7 +1,8 @@
 <template>
   <div>
-    <p class="help is-info" >Attention minimum 50 caractères !</p>
-    <form method="post" @submit.prevent="addResponse">
+    <div v-if="isLoggedIn">
+      <p class="help is-info" >Attention minimum 50 caractères !</p>
+      <form method="post" @submit.prevent="addResponse">
       <div class="borderTextarea">
         <vue-pell-editor
             v-model="description"
@@ -15,6 +16,19 @@
         Ajouter
       </button>
     </form>
+    </div>
+    <div v-else>
+      <p class="subtitle is-4">
+        <router-link :to="{name: 'Register'}" class="button is-dark">
+          Inscris toi
+        </router-link>
+        ou
+        <router-link :to="{name: 'Login'}" class="button">
+          Connecte toi
+        </router-link>
+        pour ajouter une réponse.
+      </p>
+    </div>
     <hr>
     <div v-for="response in responses" v-bind:key="response.id">
       <div class="notification">
@@ -43,8 +57,10 @@
               <i class="fas fa-trash-alt"></i>
             </span>
           </span>
-          <span style="float: right" @click="goodAnswer(response.id)" v-if="!response.resolve">
-            <button class="button is-success is-outlined">La bonne réponse ?</button>
+          <span v-if="isLoggedIn">
+            <span style="float: right" @click="goodAnswer(response.id)" v-if="!response.resolve">
+              <button class="button is-success is-outlined">La bonne réponse ?</button>
+            </span>
           </span>
         </div>
         <p v-highlightjs v-html="response.content" class="content"></p>

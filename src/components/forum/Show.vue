@@ -62,7 +62,9 @@
               {{topic.responses.length}}
             </td>
             <td v-for="response in topic.responses.slice(-1)" v-bind:key="response.id">
-              {{response.user.username}}
+              <span v-if="response.user">
+                {{response.user.username}}
+              </span>
             </td>
           </tr>
           </tbody>
@@ -71,6 +73,14 @@
       <div class="has-text-centered plus" v-if="showMore">
         <button class="button is-dark" @click="showMoreTopics()">Voir plus de sujets</button>
       </div>
+    </div>
+  </div>
+  <div v-else>
+    <div class="loading-overlay is-active">
+      <div class="loading-background"></div>
+      <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
     </div>
   </div>
 </template>

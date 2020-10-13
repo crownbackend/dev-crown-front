@@ -1,6 +1,12 @@
 <template>
   <div>
     <div class="container">
+      <div class="loading-overlay is-active" v-if="loading">
+        <div class="loading-background"></div>
+        <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+      </span>
+      </div>
       <article class="message is-info">
         <div class="message-header">
           <p>A lire avant de poster un sujet !</p>
@@ -108,6 +114,7 @@ export default {
           }
         }
       ],
+      loading: false
     }
   },
   mounted() {
@@ -155,11 +162,14 @@ export default {
     },
     addTopic() {
       if(this.formValid) {
+        this.loading = true
         ForumApi.addTopic(this.title, this.forum, this.description, this.userId)
           .then(response => {
             if(response.data.success === 1) {
+              this.loading = false
               this.$router.push({name: "showTopic", params: {slug: response.data.slug, id: response.data.topicId}})
             } else if(response.data.error) {
+              this.loading = false
               this.$buefy.dialog.alert({
                 title: 'Error',
                 message: 'Attention votre sujet nest pas complet !' +

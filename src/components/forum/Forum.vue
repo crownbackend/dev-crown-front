@@ -4,6 +4,12 @@
       Bienvenue sur le forum de Dev-crown.com,
       ici posez toute vos questions en rapport avec le developpement web et les nouvelles technologies.
     </h1>
+    <div class="loading-overlay is-active" v-if="loading">
+      <div class="loading-background"></div>
+      <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+      </span>
+    </div>
     <br>
     <br>
     <div v-for="forum in forums" v-bind:key="forum.id">
@@ -51,13 +57,15 @@
     data() {
       return {
         forums: null,
-        lastTopic: null
+        lastTopic: null,
+        loading: true
       }
     },
     created() {
       ForumApi.getForums()
         .then(response => {
           this.forums = response.data.forums
+          this.loading = false
         })
         .catch(() => {
           alert("Erreur serveur !")

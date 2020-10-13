@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-      <div class="pageloader" :class="{'is-active': loading}" style="background-color: #D2D2D2">
-        <span class="title" style="color: black">Chargement de la page</span>
-      </div>
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Partez à la découverte du développement web avec un contenu éllaboré pour tous, gratuitement !
@@ -12,6 +9,12 @@
         <div class="has-text-centered">
             <div class="title is-3">
                 Les dernières vidéos
+            </div>
+            <div class="loading-overlay is-active" v-if="loadingVideo">
+              <div class="loading-background"></div>
+              <span class="icon is-large">
+                <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+              </span>
             </div>
             <div class="row">
                 <div class="col-md-4" v-for="video in videos" v-bind:key="video.id">
@@ -63,6 +66,12 @@
             <div class="title is-3">
                 Le blog
             </div>
+          <div class="loading-overlay is-active" v-if="loadingArticles">
+            <div class="loading-background"></div>
+            <span class="icon is-large">
+                <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+              </span>
+          </div>
             <div class="row">
                 <div class="col-md-4" v-for="article in articles" v-bind:key="article.id">
                     <div class="card">
@@ -95,6 +104,12 @@
         <div class="has-text-centered">
             <div class="title is-3">
                 Le Forum
+            </div>
+            <div class="loading-overlay is-active" v-if="loadingTopics">
+              <div class="loading-background"></div>
+              <span class="icon is-large">
+                  <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+              </span>
             </div>
             <table class="table">
                 <thead>
@@ -146,14 +161,16 @@
               videos: [],
               articles: [],
               topics: [],
-              loading: true
+              loadingVideo: true,
+              loadingArticles: true,
+              loadingTopics: true
             }
         },
         created() {
             VideoApi.getLastVideos()
                 .then(response => {
-                  this.videos = response.data.videos
-                  this.loading = false
+                    this.loadingVideo = false
+                    this.videos = response.data.videos
                 })
                 .catch(() => {
                     alert('Erreur serveur')
@@ -162,8 +179,8 @@
                 });
             BlogApi.getLastArticlesHome()
                 .then(response => {
+                    this.loadingArticles = false
                     this.articles = response.data.articles
-                    this.loading = false
                 })
                 .catch(() => {
                     alert('Erreur serveur !')
@@ -171,8 +188,8 @@
 
             ForumApi.getLastTopic()
                 .then(response => {
+                    this.loadingTopics = false
                     this.topics = response.data.topics
-                    this.loading = false
                 })
             .catch(() => {
                 alert('Erreur serveur !')

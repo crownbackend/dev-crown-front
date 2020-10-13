@@ -1,12 +1,15 @@
 <template>
     <div class="container">
-      <div class="pageloader" :class="{'is-active': loading}" style="background-color: #D2D2D2">
-        <span class="title" style="color: black">Chargement de la page</span>
-      </div>
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
                 Retrouver ici toutes les vidéos de ma chaîne Youtube !
             </h1>
+        </div>
+        <div class="loading-overlay is-active" v-if="loading">
+          <div class="loading-background"></div>
+          <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
         </div>
         <br>
         <div class="has-text-centered">
@@ -78,17 +81,17 @@
         components: {Favorie},
         data() {
             return {
-                videos: [],
-                showMore: null,
-                loading: true
+              videos: [],
+              showMore: null,
+              loading: true
             }
         },
         created() {
             VideoApi.getVideos()
                 .then(response => {
+                    this.loading = false
                     this.videos = response.data.videos
                     this.showMore = true
-                    this.loading = false
                 })
                 .catch(() => {
                     alert('Erreur serveur')

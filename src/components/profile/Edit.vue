@@ -1,5 +1,11 @@
 <template>
     <div class="container" v-if="user">
+      <div class="loading-overlay is-active" v-if="loading">
+        <div class="loading-background"></div>
+        <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+      </span>
+      </div>
         <h1 class="title is-2">Editer mes informations</h1>
         <div class="notification">
             <figure v-if="user.avatar" >
@@ -72,7 +78,8 @@
               usernameGood: false,
               emailMessageError: null,
               emailGood: false,
-              file: null
+              file: null,
+              loading: false
           }
         },
         mounted() {
@@ -93,9 +100,11 @@
         },
         methods: {
             sendForm() {
+              this.loading = true
                 UserApi.editProfile(this.user.username, this.user.email, this.password, this.file)
                     .then(response => {
                         if(response.data.edit == 1) {
+                            this.loading = false
                             this.$buefy.notification.open({
                                 message: 'Votre compte a bien été modifié.',
                                 type: 'is-success'
@@ -103,11 +112,13 @@
                             this.$store.dispatch('logout')
                             this.$router.push('/mon-compte/connexion')
                         } else if(response.data.detail) {
+                            this.loading = false
                             this.$buefy.notification.open({
                                 message: response.data.detail,
                                 type: 'is-danger'
                             })
                         } else {
+                            this.loading = false
                             this.$buefy.notification.open({
                                 message: response.data,
                                 type: 'is-danger'

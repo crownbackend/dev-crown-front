@@ -130,6 +130,14 @@
           <br>
         </div>
     </div>
+  <div v-else>
+    <div class="loading-overlay is-active">
+      <div class="loading-background"></div>
+      <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>

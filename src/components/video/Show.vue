@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="video.playliste">
                         Playliste :
                         <router-link :to="{name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                             {{video.playliste.name}}
@@ -147,6 +147,14 @@
             </div>
         </div>
         <br>
+    </div>
+    <div v-else>
+      <div class="loading-overlay is-active">
+        <div class="loading-background"></div>
+        <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+      </div>
     </div>
 </template>
 

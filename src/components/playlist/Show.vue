@@ -2,7 +2,7 @@
     <div v-if="playlist">
         <h1 class="has-text-centered title is-1">{{playlist.name}}</h1>
         <br>
-        <p class="subtitle is-4 container">
+        <p class="subtitle is-4 container notification">
             {{playlist.description}}
         </p>
         <br>
@@ -63,6 +63,14 @@
         </div>
         <br>
     </div>
+  <div v-else>
+    <div class="loading-overlay is-active">
+      <div class="loading-background"></div>
+      <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+    </div>
+  </div>
 </template>
 
 <script>

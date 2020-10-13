@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div v-if="article">
+    <div class="container" v-if="article">
+        <div>
             <br>
             <h1 class="title is-2">{{article.title}}</h1>
             <br>
@@ -37,6 +37,14 @@
             <Comment/>
         </div>
     </div>
+  <div v-else>
+    <div class="loading-overlay is-active" v-if="loading">
+      <div class="loading-background"></div>
+      <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -48,7 +56,8 @@
         components: {Comment},
         data() {
             return {
-                article: null
+                article: null,
+              loading: true
             }
         },
         mounted() {
