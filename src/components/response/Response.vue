@@ -4,6 +4,12 @@
       <p class="help is-info" >Attention minimum 50 caractères !</p>
       <form method="post" @submit.prevent="addResponse">
       <div class="borderTextarea">
+        <div class="loading-overlay is-active" v-if="loading">
+          <div class="loading-background"></div>
+          <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+        </div>
         <vue-pell-editor
             v-model="description"
             :placeholder="editorPlaceholder"
@@ -126,7 +132,8 @@ export default {
       ],
       userId: null,
       formEdit: false,
-      responseId: null
+      responseId: null,
+      loading: false
     }
   },
   mounted() {
@@ -134,12 +141,14 @@ export default {
   },
   methods: {
     addResponse() {
+      this.loading = true
       UserApi.verifyToken()
           .then(response => {
             if(response.data.token_valid == 1) {
               ForumApi.addResponse(this.description, this.userId, this.$route.params.id)
                   .then(response => {
                     if(response.data.error) {
+                      this.loading = false
                       this.$buefy.dialog.alert({
                         title: 'Error',
                         message: "Attention il faut minimum 50 caractère pour rédiger une réponse !",
@@ -153,6 +162,7 @@ export default {
                     } else {
                       this.$parent.topic.responses = response.data.responses
                       this.description = null
+                      this.loading = false
                     }
                   })
                   .catch(() => {
@@ -198,9 +208,11 @@ export default {
       this.formEdit = true
     },
     sendEditResponse(id, content) {
+      this.loading = true
       ForumApi.editResponse(id, content, this.$route.params.id)
         .then(response => {
           if(response.data.error) {
+            this.loading = false
             this.$buefy.dialog.alert({
               title: 'Error',
               message: "Attention il faut minimum 50 caractère pour rédiger une réponse !",
@@ -214,6 +226,7 @@ export default {
           } else {
             this.$parent.topic.responses = response.data.responses
             this.formEdit = false
+            this.loading = false
           }
         })
           .catch(() => {
