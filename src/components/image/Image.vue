@@ -14,7 +14,13 @@
       </div>
 
       <div class="scroller">
-        <div v-if="userImages" class="subtitle is-2 has-text-centered">Aucune images</div>
+        <div class="loading-overlay is-active" v-if="loading">
+          <div class="loading-background"></div>
+          <span class="icon is-large">
+            <i class="fas fa-sync-alt fa-2x fa-spin"></i>
+          </span>
+        </div>
+        <div v-if="userImages.length !== 0" class="subtitle is-2 has-text-centered">Aucune images</div>
         <div v-for="image in userImages" v-bind:key="image.id">
           <div>
             Cliquer sur l'image pour la voir : <a href="#" @click="imageShow(image.name)">
@@ -102,17 +108,20 @@ export default {
       imageNotUpload: false,
       userId: null,
       showImage: null,
-      active: false
+      active: false,
+      loading: false
     }
   },
   created() {
     this.userId = localStorage.getItem("userId")
+    this.loading = true
     UserApi.verifyToken()
       .then(response => {
         if(response.data.token_valid == 1) {
           ForumApi.getImagesUser(this.userId)
             .then(response => {
               this.userImages = response.data.images
+              this.loading = false
             })
               .catch(() => {
                 this.$store.dispatch('logout')
@@ -134,6 +143,7 @@ export default {
       }
     },
     sendImages() {
+      this.loading = true
       ForumApi.sendImages(this.files)
         .then(response => {
           if(response.data.success === 1) {
@@ -143,14 +153,17 @@ export default {
               message: 'Images télécharger avec success!',
               type: 'is-success'
             })
+            this.loading = false
           }
           if(response.data.imagesNotUpload.length > 0) {
             this.imageNotUpload = true
             this.imagesError = response.data.imagesNotUpload
+            this.loading = false
           }
         })
         .catch((err) => {
           if(err.response.data.errorCountFile === 1) {
+            this.loading = false
             this.$buefy.dialog.alert({
               title: 'Error',
               message: "Attention vous avez uploader plus de 5 images a la fois !",
@@ -215,7 +228,7 @@ export default {
             })
       }
     },
-    select: function(img){
+    select(img){
       navigator.clipboard.writeText(img)
       this.$buefy.notification.open({
         message: 'Lien de l\'image copié dans le press papier!',

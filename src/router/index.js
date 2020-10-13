@@ -29,6 +29,8 @@ const showTopic = () => import("../components/topic/Topic")
 const addTopic = () => import("../components/topic/Add")
 const editTopic = () => import("../components/topic/Edit")
 const imageUpload = () => import("../components/image/Image")
+const politique = () => import("../components/confidentialite/Politique")
+const contact = () => import("../components/contact/Contact")
 
 const routes = [
   {
@@ -220,6 +222,24 @@ const routes = [
       title: "Telecharger des images pour le forum",
       description: "Télécharger les images pour le forum.",
       requiresAuth: true
+    }
+  },
+  {
+    path: "/politique-de-confidentialite",
+    name: "politique",
+    component: politique,
+    meta: {
+      title: "Politique de confidentialité",
+      description: "Détail de la politique de confidentialité"
+    }
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: contact,
+    meta: {
+      title: "Contact",
+      description: "Contacter moi si vous avez une question sur le site !"
     }
   }
 ]

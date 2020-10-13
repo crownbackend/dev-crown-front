@@ -127,7 +127,6 @@
                         </span>
                     </span>
                 </div>
-                <br>
                 <p :id="'comment_'+comment.id" class="pre-formatted">
                     {{comment.content}}
                 </p>
@@ -338,41 +337,42 @@
 
 <style>
     .video-container {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 */
-        height: 0;
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
     }
     .video-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     .content {
-        padding-bottom: 50px
+      padding-bottom: 50px
     }
 
     .download-video {
-        padding-top: 10px;
+      padding-top: 10px;
     }
 
     .img-avatar {
-        width: 50px;
-        height: 50px;
+      width: 50px;
+      height: 50px;
     }
 
     .comment {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
     }
 
     .icon-comment, .share {
-        margin-left: 10px;
-        cursor: pointer;
+      margin-left: 10px;
+      cursor: pointer;
     }
 
     .pre-formatted {
-        white-space: pre-wrap;
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
 </style>

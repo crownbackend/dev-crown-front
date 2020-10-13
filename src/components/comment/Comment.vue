@@ -51,7 +51,7 @@
                         </span>
                     </span>
                 </div>
-                <br>
+
                 <p :id="'comment_'+comment.id" class="pre-formatted">
                     {{comment.content}}
                 </p>

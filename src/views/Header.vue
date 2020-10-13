@@ -41,7 +41,7 @@
                         Mon profile
                       </router-link>
                   </b-navbar-item>
-                  <b-navbar-item href="#">
+                  <b-navbar-item tag="router-link" :to="{ name: 'contact' }">
                       Contact
                   </b-navbar-item>
                   <b-navbar-item @click="logout">
