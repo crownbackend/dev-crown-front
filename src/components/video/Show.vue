@@ -34,13 +34,33 @@
                 Partager la vidéo :
             </span>
             <span class="share">
+              <ShareNetwork
+                  network="facebook"
+                  :url="urlShare"
+                  :title="video.title"
+                  :description="video.description"
+              >
                 <i class="fab fa-facebook-square fa-3x" style="color: #3b5998"></i>
+              </ShareNetwork>
             </span>
             <span class="share">
+              <ShareNetwork
+                  network="twitter"
+                  :url="urlShare"
+                  :title="video.title"
+              >
                 <i class="fab fa-twitter-square fa-3x" style="color: #00acee"></i>
+              </ShareNetwork>
             </span>
             <span class="share">
+               <ShareNetwork
+                   network="email"
+                   :url="urlShare"
+                   :title="video.title"
+                   :description="video.description"
+               >
                 <i class="fas fa-envelope-square fa-3x"></i>
+               </ShareNetwork>
             </span>
         </div>
         <hr>
@@ -163,6 +183,7 @@
     import CommentApi from "../../services/CommentApi";
     import moment from "moment";
     import Favorie from "../favorie/Favorie";
+    import Vue from "vue";
 
     export default {
         name: "Show",
@@ -179,9 +200,11 @@
                 idChange: null,
                 commentErrorEdit: null,
                 formEdit: false,
+                urlShare: null
             }
         },
         created() {
+          this.urlShare = Vue.prototype.$hostFront + this.$router.currentRoute.path
             VideoApi.getVideo(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
                     this.video = response.data.video

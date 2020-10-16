@@ -7,7 +7,9 @@ import moment from "moment";
 import axios from "axios";
 import VueHighlightJS from 'vue-highlightjs'
 import VuePellEditor from 'vue-pell-editor'
+import VueSocialSharing from 'vue-social-sharing'
 
+Vue.use(VueSocialSharing);
 Vue.use(VuePellEditor)
 Vue.use(Buefy)
 Vue.use(VueHighlightJS)
@@ -20,6 +22,7 @@ Vue.config.productionTip = false
 Vue.prototype.$hostName = process.env.VUE_APP_HOSTNAME
 Vue.prototype.$hostImages = process.env.VUE_APP_HOSTIMAGE
 Vue.prototype.$hostVideos = process.env.VUE_APP_VIDEOS
+Vue.prototype.$hostFront = process.env.VUE_APP_HOST_FRONT
 
 // moment config show time
 moment.locale('fr', {

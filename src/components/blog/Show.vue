@@ -12,14 +12,32 @@
                 <span class="subtitle is-5">
                     Partager la vidéo :
                 </span>
-                    <span class="share">
+                <span class="share">
+                  <ShareNetwork
+                      network="facebook"
+                      :url="urlShare"
+                      :title="article.title"
+                  >
                     <i class="fab fa-facebook-square fa-3x" style="color: #3b5998"></i>
+                  </ShareNetwork>
                 </span>
-                    <span class="share">
+                <span class="share">
+                   <ShareNetwork
+                       network="twitter"
+                       :url="urlShare"
+                       :title="article.title"
+                   >
                     <i class="fab fa-twitter-square fa-3x" style="color: #00acee"></i>
+                   </ShareNetwork>
                 </span>
-                    <span class="share">
+                <span class="share">
+                  <ShareNetwork
+                      network="email"
+                      :url="urlShare"
+                      :title="article.title"
+                  >
                     <i class="fas fa-envelope-square fa-3x"></i>
+                  </ShareNetwork>
                 </span>
                 <span style="float: right">
                     <span class="subtitle is-4 separe">
@@ -51,16 +69,19 @@
     import Comment from "../comment/Comment";
     import BlogApi from "../../services/BlogApi";
     import moment from "moment";
+    import Vue from "vue";
     export default {
         name: "Show",
         components: {Comment},
         data() {
             return {
-                article: null,
-              loading: true
+              article: null,
+              loading: true,
+              urlShare: null
             }
         },
         mounted() {
+          this.urlShare = Vue.prototype.$hostFront + this.$router.currentRoute.path
             BlogApi.getArticle(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
                     this.article = response.data
