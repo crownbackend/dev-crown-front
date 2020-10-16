@@ -83,7 +83,17 @@
                     }
                 })
                 .catch(() => {
-                    alert('Erreur serveur !');
+                  this.loading = false
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 })
         },
         computed: {
@@ -102,15 +112,27 @@
             },
             getLastArticle() {
                 let article = this.articles[this.articles.length - 1];
+                this.loading = true
                 BlogApi.getLastArticles(article.publishedAt)
                     .then(response => {
+                      this.loading = false
                         this.articles = this.articles.concat(response.data)
                         if(response.data.length === 0) {
                             this.showMore = false
                         }
                     })
                     .catch(() => {
-                      alert('Erreur serveur !');
+                      this.loading = false
+                      this.$buefy.dialog.alert({
+                        title: 'Error',
+                        message: "Erreur serveur !",
+                        type: 'is-danger',
+                        hasIcon: true,
+                        icon: 'times-circle',
+                        iconPack: 'fa',
+                        ariaRole: 'alertdialog',
+                        ariaModal: true
+                      })
                     })
             }
         }

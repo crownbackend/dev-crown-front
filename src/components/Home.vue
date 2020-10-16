@@ -173,9 +173,17 @@
                     this.videos = response.data.videos
                 })
                 .catch(() => {
-                    alert('Erreur serveur')
-                    this.$store.dispatch('logout')
-                    this.$router.go(this.$router.currentRoute)
+                  this.loadingVideo = false
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 });
             BlogApi.getLastArticlesHome()
                 .then(response => {
@@ -183,7 +191,17 @@
                     this.articles = response.data.articles
                 })
                 .catch(() => {
-                    alert('Erreur serveur !')
+                  this.loadingArticles = false
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 })
 
             ForumApi.getLastTopic()
@@ -192,7 +210,17 @@
                     this.topics = response.data.topics
                 })
             .catch(() => {
-                alert('Erreur serveur !')
+              this.loadingTopics = false
+              this.$buefy.dialog.alert({
+                title: 'Error',
+                message: "Erreur serveur !",
+                type: 'is-danger',
+                hasIcon: true,
+                icon: 'times-circle',
+                iconPack: 'fa',
+                ariaRole: 'alertdialog',
+                ariaModal: true
+              })
             })
         },
         methods: {

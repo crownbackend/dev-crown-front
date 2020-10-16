@@ -109,7 +109,16 @@
           document.title = response.data.forum.name
         })
         .catch(() => {
-          alert("Erreur serveur !")
+          this.$buefy.dialog.alert({
+            title: 'Error',
+            message: "Erreur serveur !",
+            type: 'is-danger',
+            hasIcon: true,
+            icon: 'times-circle',
+            iconPack: 'fa',
+            ariaRole: 'alertdialog',
+            ariaModal: true
+          })
         })
     },
     methods: {
@@ -125,7 +134,16 @@
             }
           })
           .catch(() => {
-            alert("Erreur serveur !")
+            this.$buefy.dialog.alert({
+              title: 'Error',
+              message: "Erreur serveur !",
+              type: 'is-danger',
+              hasIcon: true,
+              icon: 'times-circle',
+              iconPack: 'fa',
+              ariaRole: 'alertdialog',
+              ariaModal: true
+            })
           })
       },
       redirectAddTopic() {

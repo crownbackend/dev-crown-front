@@ -99,7 +99,16 @@
                     this.comments = response.data.comments
                 })
                 .catch(() => {
-                    alert('Erreur serveur !')
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 })
         },
         methods: {

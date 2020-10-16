@@ -56,7 +56,7 @@
         </div>
     </div>
   <div v-else>
-    <div class="loading-overlay is-active" v-if="loading">
+    <div class="loading-overlay is-active">
       <div class="loading-background"></div>
       <span class="icon is-large">
             <i class="fas fa-sync-alt fa-2x fa-spin"></i>
@@ -89,7 +89,16 @@
                     document.querySelector('meta[name="description"]').setAttribute("content", response.data.metaDescription.slice(0, 155));
                 })
                 .catch(() => {
-                    alert('Erreur serveur')
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 })
         },
         methods: {

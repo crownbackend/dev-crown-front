@@ -98,7 +98,16 @@
                             }
                         })
                         .catch(() =>  {
-                            alert('Erreur serveur')
+                          this.$buefy.dialog.alert({
+                            title: 'Error',
+                            message: "Erreur serveur !",
+                            type: 'is-danger',
+                            hasIcon: true,
+                            icon: 'times-circle',
+                            iconPack: 'fa',
+                            ariaRole: 'alertdialog',
+                            ariaModal: true
+                          })
                         });
                 } else {
                     this.errorMessage = "Votre identifiant ou mot de passe est incorrect."

@@ -77,7 +77,16 @@
                         }
                     })
                     .catch(() => {
-                        alert("Problème serveur veuillez recommencé plutard")
+                      this.$buefy.dialog.alert({
+                        title: 'Error',
+                        message: "Erreur serveur !",
+                        type: 'is-danger',
+                        hasIcon: true,
+                        icon: 'times-circle',
+                        iconPack: 'fa',
+                        ariaRole: 'alertdialog',
+                        ariaModal: true
+                      })
                     })
             },
             verifyEmail() {

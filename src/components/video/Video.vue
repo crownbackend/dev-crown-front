@@ -94,9 +94,17 @@
                     this.showMore = true
                 })
                 .catch(() => {
-                    alert('Erreur serveur')
-                    this.$store.dispatch('logout')
-                    this.$router.go(this.$router.currentRoute)
+                  this.loading = false
+                  this.$buefy.dialog.alert({
+                    title: 'Error',
+                    message: "Erreur serveur !",
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                  })
                 })
         },
         methods: {
