@@ -168,7 +168,7 @@
         <br>
     </div>
     <div v-else>
-      <div class="loading-overlay is-active">
+      <div class="loading-overlay is-active" v-if="loading">
         <div class="loading-background"></div>
         <span class="icon is-large">
             <i class="fas fa-sync-alt fa-2x fa-spin"></i>
@@ -200,17 +200,23 @@
                 idChange: null,
                 commentErrorEdit: null,
                 formEdit: false,
-                urlShare: null
+                urlShare: null,
+                loading: true
             }
         },
         created() {
           this.urlShare = Vue.prototype.$hostFront + this.$router.currentRoute.path
             VideoApi.getVideo(this.$route.params.slug, this.$route.params.id)
                 .then(response => {
+                  if(response.data.video == null) {
+                    this.$router.push({name: 'Error404'})
+                  }
+                    this.loading = false
                     this.video = response.data.video
                     document.title = this.video.title
                 })
                 .catch(() => {
+                  this.loading = false
                   this.$buefy.dialog.alert({
                     title: 'Error',
                     message: "Erreur serveur !",
