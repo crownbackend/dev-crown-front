@@ -8,11 +8,16 @@ import axios from "axios";
 import VueHighlightJS from 'vue-highlightjs'
 import VuePellEditor from 'vue-pell-editor'
 import VueSocialSharing from 'vue-social-sharing'
+import VueAnalytics from 'vue-analytics'
 
 Vue.use(VueSocialSharing);
 Vue.use(VuePellEditor)
 Vue.use(Buefy)
 Vue.use(VueHighlightJS)
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_GOOGLE_ANALYTICS,
+  router
+})
 
 if(localStorage.getItem('token')) {
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
