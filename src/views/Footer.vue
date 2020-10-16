@@ -33,11 +33,6 @@
                               </a>
                             </li>
                             <li>
-                              <a href="">
-                                Instagram <i class="fab fa-instagram-square"></i>
-                              </a>
-                            </li>
-                            <li>
                               <a href="https://www.twitch.tv/devcrown/" target="_blank">
                                 Twitch <i class="fab fa-twitch"></i>
                               </a>
