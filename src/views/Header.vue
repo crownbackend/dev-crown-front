@@ -87,6 +87,7 @@
                     .then(() => {
                         this.$router.push({path: "/"}).catch(() => {})
                     })
+              this.$router.go(this.$router.currentRoute)
             },
         }
     }
