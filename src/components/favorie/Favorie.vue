@@ -53,34 +53,62 @@
                                       .then(response => {
                                         this.$parent.$data.videos = response.data.videos
                                       })
-                                      .catch(() => {
-                                        this.$store.dispatch('logout')
-                                        this.$buefy.dialog.alert({
-                                          title: 'Error',
-                                          message: "Erreur serveur !",
-                                          type: 'is-danger',
-                                          hasIcon: true,
-                                          icon: 'times-circle',
-                                          iconPack: 'fa',
-                                          ariaRole: 'alertdialog',
-                                          ariaModal: true
-                                        })
+                                      .catch((err) => {
+                                        if(err.response.status === 500) {
+                                          this.$store.dispatch('logout')
+                                          this.$buefy.dialog.alert({
+                                            title: 'Error',
+                                            message: "Votre session à expirer veuillez vous reconnecté",
+                                            type: 'is-danger',
+                                            hasIcon: true,
+                                            icon: 'times-circle',
+                                            iconPack: 'fa',
+                                            ariaRole: 'alertdialog',
+                                            ariaModal: true
+                                          })
+                                          this.$router.push({name: "Login"})
+                                        } else {
+                                          this.$buefy.dialog.alert({
+                                            title: 'Error',
+                                            message: "Erreur serveur !",
+                                            type: 'is-danger',
+                                            hasIcon: true,
+                                            icon: 'times-circle',
+                                            iconPack: 'fa',
+                                            ariaRole: 'alertdialog',
+                                            ariaModal: true
+                                          })
+                                        }
                                       })
                                 }
                               }
                             })
-                            .catch(() => {
-                              this.$store.dispatch('logout')
-                              this.$buefy.dialog.alert({
-                                title: 'Error',
-                                message: "Erreur serveur !",
-                                type: 'is-danger',
-                                hasIcon: true,
-                                icon: 'times-circle',
-                                iconPack: 'fa',
-                                ariaRole: 'alertdialog',
-                                ariaModal: true
-                              })
+                            .catch((err) => {
+                              if(err.response.status === 500) {
+                                this.$store.dispatch('logout')
+                                this.$buefy.dialog.alert({
+                                  title: 'Error',
+                                  message: "Votre session à expirer veuillez vous reconnecté",
+                                  type: 'is-danger',
+                                  hasIcon: true,
+                                  icon: 'times-circle',
+                                  iconPack: 'fa',
+                                  ariaRole: 'alertdialog',
+                                  ariaModal: true
+                                })
+                                this.$router.push({name: "Login"})
+                              } else {
+                                this.$buefy.dialog.alert({
+                                  title: 'Error',
+                                  message: "Erreur serveur !",
+                                  type: 'is-danger',
+                                  hasIcon: true,
+                                  icon: 'times-circle',
+                                  iconPack: 'fa',
+                                  ariaRole: 'alertdialog',
+                                  ariaModal: true
+                                })
+                              }
                             })
                       } else {
                         VideoApi.addFavored(localStorage.getItem("userId"), this.videoId)
@@ -93,18 +121,32 @@
                                 })
                               }
                             })
-                            .catch(() => {
-                              this.$store.dispatch('logout')
-                              this.$buefy.dialog.alert({
-                                title: 'Error',
-                                message: "Erreur serveur !",
-                                type: 'is-danger',
-                                hasIcon: true,
-                                icon: 'times-circle',
-                                iconPack: 'fa',
-                                ariaRole: 'alertdialog',
-                                ariaModal: true
-                              })
+                            .catch((err) => {
+                              if(err.response.status === 500) {
+                                this.$store.dispatch('logout')
+                                this.$buefy.dialog.alert({
+                                  title: 'Error',
+                                  message: "Votre session à expirer veuillez vous reconnecté",
+                                  type: 'is-danger',
+                                  hasIcon: true,
+                                  icon: 'times-circle',
+                                  iconPack: 'fa',
+                                  ariaRole: 'alertdialog',
+                                  ariaModal: true
+                                })
+                                this.$router.push({name: "Login"})
+                              } else {
+                                this.$buefy.dialog.alert({
+                                  title: 'Error',
+                                  message: "Erreur serveur !",
+                                  type: 'is-danger',
+                                  hasIcon: true,
+                                  icon: 'times-circle',
+                                  iconPack: 'fa',
+                                  ariaRole: 'alertdialog',
+                                  ariaModal: true
+                                })
+                              }
                             })
                       }
                     }
