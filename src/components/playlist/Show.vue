@@ -1,5 +1,5 @@
 <template>
-    <div v-if="playlist">
+    <div v-if="playlist" class="container">
         <h1 class="has-text-centered title is-1">{{playlist.name}}</h1>
         <br>
         <p class="subtitle is-4 container notification">

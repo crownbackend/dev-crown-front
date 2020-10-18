@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div v-if="technology">
             <h1 class="has-text-centered title is-1">{{technology.name}}</h1>
             <br>
