@@ -72,7 +72,7 @@
                 <i class="fas fa-sync-alt fa-2x fa-spin"></i>
               </span>
           </div>
-            <div class="row">
+            <div class="row" v-if="articles.length !== 0">
                 <div class="col-md-4" v-for="article in articles" v-bind:key="article.id">
                     <div class="card">
                         <div class="card-image">
@@ -98,6 +98,11 @@
                     </div>
                 </div>
             </div>
+            <div v-else>
+              <div class="title is-3 has-text-centered">
+                Aucun article pour le moment
+              </div>
+            </div>
         </div>
         <br>
 
@@ -111,6 +116,7 @@
                   <i class="fas fa-sync-alt fa-2x fa-spin"></i>
               </span>
             </div>
+          <div v-if="topics.length !== 0">
             <table class="table">
                 <thead>
                 <tr>
@@ -140,6 +146,12 @@
                    </tr>
                 </tbody>
             </table>
+          </div>
+          <div v-else>
+            <div class="title is-3 has-text-centered">
+              Aucun sujet pour le moment
+            </div>
+          </div>
         </div>
         <br>
 

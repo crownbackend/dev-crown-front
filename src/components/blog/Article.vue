@@ -12,7 +12,7 @@
           </span>
       </div>
         <br>
-        <div class="has-text-centered">
+        <div class="has-text-centered" v-if="articles.length !== 0">
             <div class="title is-3">
                 Les derniers articles
             </div>
@@ -54,6 +54,11 @@
                 <button class="button is-dark" @click="getLastArticle()">Voir plus d'article</button>
             </div>
         </div>
+      <div v-else>
+        <div class="title is-3 has-text-centered">
+         Aucun article pour le moment
+        </div>
+      </div>
     </div>
 </template>
 
