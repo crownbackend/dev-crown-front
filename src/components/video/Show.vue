@@ -10,10 +10,11 @@
         <div>
             <span style="float: right" class="subtitle is-5">{{video.publishedAt|formatDate}}</span>
             <div v-if="isLoggedIn" class="download-video">
-                <button @click="downloadVideo(video.nameFileVideo)" v-if="verifyDateVideoDownload(video.publishedAt)" class="button is-dark">
+                <a :href="this.url" target="_blank" @load="this.downloadVideo(video.nameFileVideo)" v-if="verifyDateVideoDownload(video.publishedAt)" class="button is-dark">
                     Télécharger la vidéo
+                  {{downloadVideo(video.nameFileVideo)}}
                     <i class="fas fa-download"></i>
-                </button>
+                </a>
             </div>
             <div v-else class="download-video">
                 <p class="subtitle is-5">
@@ -201,7 +202,8 @@
                 commentErrorEdit: null,
                 formEdit: false,
                 urlShare: null,
-                loading: true
+                loading: true,
+                url : null
             }
         },
         created() {
@@ -214,6 +216,7 @@
                     this.loading = false
                     this.video = response.data.video
                     document.title = this.video.title
+                  this.downloadVideo(response.data.video.nameFileVideo)
                 })
                 .catch(() => {
                   this.loading = false
@@ -342,21 +345,21 @@
                 return this.$hostImages + "/"+docs+"/" + name;
             },
             downloadVideo(name) {
-                axios.post(this.$hostName+"/check/download/video", {
-                    "authorization": localStorage.getItem("token")
-                })
+            axios.post(this.$hostName+"/check/download/video", {
+              "authorization": localStorage.getItem("token")
+            })
                 .then(response => {
-                    if(response.data.download == 1) {
-                        window.open(this.$hostName+"/file/"+name+"/"+localStorage.getItem("token"), "_blank")
-                    }
+                  if(response.data.download == 1) {
+                    this.url = this.$hostName+"/file/"+name+"/"+localStorage.getItem("token")
+                  }
                 })
                 .catch(err => {
-                    if(err.response.status == 500) {
-                        this.$store.dispatch('logout')
-                    }
+                  if(err.response.status == 500) {
+                    this.$store.dispatch('logout')
+                  }
                 })
-            },
-          verifyDateVideoDownload(date) {
+          },
+            verifyDateVideoDownload(date) {
               let dateC = moment(date).format();
               let nowD = moment().format()
               if(nowD > dateC) {
@@ -366,7 +369,7 @@
               }
           }
         },
-        computed: {
+      computed: {
             isLoggedIn(){
                 return this.$store.getters.isLoggedIn
             },
