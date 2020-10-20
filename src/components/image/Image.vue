@@ -2,7 +2,7 @@
   <div>
     <hr>
     <div class="container">
-      <h1 class="title is-2 has-text-centered">Vos images télécharger sur le forum</h1>
+      <h1 class="title is-2 has-text-centered">Vos images téléchargées sur le forum</h1>
       <div class="modal" :class="{'is-active': active}">
         <div class="modal-background" @click="closeModal()"></div>
         <div class="modal-content">

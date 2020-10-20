@@ -2,7 +2,7 @@
     <div class="container">
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
-                Retrouver ici toutes mes playlistes Youtube
+                Retrouvez ici toutes mes playlistes Youtube
             </h1>
         </div>
       <div class="loading-overlay is-active" v-if="loading">

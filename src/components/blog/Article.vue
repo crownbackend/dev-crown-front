@@ -2,7 +2,7 @@
     <div class="container">
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
-                Retrouver ici tout mes articles !
+                Retrouvez ici tout mes articles !
             </h1>
         </div>
       <div class="loading-overlay is-active" v-if="loading">

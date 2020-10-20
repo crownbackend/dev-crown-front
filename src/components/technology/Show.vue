@@ -30,7 +30,7 @@
                             <div class="media">
                                 <div class="media-content">
                                     <Favorie :video-id="video.id" :favored-video="video.favored"/>
-                                    <p v-if="video.playliste">Playliste :
+                                    <p v-if="video.playliste">Playlist :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
                                         </router-link>

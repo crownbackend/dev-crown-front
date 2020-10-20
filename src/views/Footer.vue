@@ -2,8 +2,8 @@
     <div>
       <br>
         <footer class="footer">
-          <cookie-law theme="base" message="Dev-crown peut utiliser des cookies pour mémoriser vos informations de connexion, collecter des statistiques en vue d’optimiser la fonctionnalité du site"
-                      buttonText="accepter les cookies"	buttonClass="button is-primary">
+          <cookie-law theme="base" message="Dev-crown peut utiliser des cookies pour mémoriser vos informations de connexion ou collecter des statistiques en vue d’optimiser la fonctionnalité du site."
+                      buttonText="Accepter les cookies"	buttonClass="button is-primary">
           </cookie-law>
             <div class="content">
                 <div class="row">

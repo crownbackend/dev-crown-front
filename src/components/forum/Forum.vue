@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="subtitle is-4 has-text-centered notification">
       Bienvenue sur le forum de Dev-crown.com,
-      ici posez toute vos questions en rapport avec le developpement web et les nouvelles technologies.
+      ici posez toutes vos questions concernant le developpement web et les nouvelles technologies.
     </h1>
     <div class="loading-overlay is-active" v-if="loading">
       <div class="loading-background"></div>

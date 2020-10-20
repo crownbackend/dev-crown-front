@@ -35,7 +35,7 @@
                                         </figure>
                                     </router-link>
                                     <Favorie :video-id="video.id" :favored-video="video.favored"/>
-                                    <div v-if="video.playliste">Playliste :
+                                    <div v-if="video.playliste">Playlist :
                                         <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                             {{video.playliste.name}}
                                         </router-link>
@@ -185,6 +185,7 @@
                     this.videos = response.data.videos
                 })
                 .catch(() => {
+                  this.$store.dispatch('logout')
                   this.loadingVideo = false
                   this.$buefy.dialog.alert({
                     title: 'Error',

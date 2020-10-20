@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="col-md-12" v-if="video.playliste">
-                        Playliste :
+                        Playlist :
                         <router-link :to="{name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                             {{video.playliste.name}}
                         </router-link>

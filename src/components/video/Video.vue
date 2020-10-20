@@ -2,7 +2,7 @@
     <div class="container">
         <div class="notification">
             <h1 class="subtitle is-4 has-text-centered">
-                Retrouver ici toutes les vidéos de ma chaîne Youtube !
+                Retrouvez ici toutes les vidéos de ma chaîne Youtube !
             </h1>
         </div>
         <div class="loading-overlay is-active" v-if="loading">
@@ -35,7 +35,7 @@
                                             </router-link>
                                         </p>
                                         <Favorie :video-id="video.id" :favored-video="video.favored"/>
-                                        <p v-if="video.playliste">Playliste :
+                                        <p v-if="video.playliste">Playlist :
                                             <router-link :to="{ name: 'showPlaylist', params: {slug: video.playliste.slug, id: video.playliste.id}}">
                                                 {{video.playliste.name}}
                                             </router-link>
@@ -94,6 +94,7 @@
                     this.showMore = true
                 })
                 .catch(() => {
+                  this.$store.dispatch('logout')
                   this.loading = false
                   this.$buefy.dialog.alert({
                     title: 'Error',

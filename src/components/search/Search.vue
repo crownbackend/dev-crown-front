@@ -2,7 +2,7 @@
     <div>
         <div class="padding"></div>
         <div class="container">
-          <h1 class="title is-1 has-text-centered">Rechercher une resource sur le site</h1>
+          <h1 class="title is-1 has-text-centered">Rechercher une ressource sur le site</h1>
           <div class="subtitle is-4 has-text-centered">
             <div class="field">
               <p class="control has-icons-left">

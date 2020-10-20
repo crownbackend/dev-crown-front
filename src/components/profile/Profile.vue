@@ -2,7 +2,7 @@
     <div v-if="user">
         <div class="container">
           <div class="title is-2 profile">
-            Mon profile
+            Mon profil
           </div>
           <div class="title is-2">
             <router-link :to="{name: 'editProfile', params: {username: user.username}}">
@@ -37,7 +37,7 @@
                     </div>
               </div>
               <div v-else>
-                <h1 class="title is-2">Aucune vidéo ajouter à vos favories</h1>
+                <h1 class="title is-2">Aucune vidéo ajoutée à vos favoris</h1>
               </div>
               <hr>
             </div>
@@ -76,7 +76,7 @@
                   </table>
               </div>
               <div v-else>
-                <h1 class="title is-2">Aucun sujet créer </h1>
+                <h1 class="title is-2">Aucun sujet crée </h1>
               </div>
               <hr>
             </div>
@@ -113,7 +113,7 @@
               </table>
               </div>
               <div v-else>
-                <h1 class="title is-2">Aucune réponse posté sur le forum</h1>
+                <h1 class="title is-2">Aucune réponse postée sur le forum</h1>
               </div>
               <hr>
             </div>
@@ -121,7 +121,7 @@
           <div class="row">
             <div class="col-md-12">
               <router-link :to="{name: 'imageUpload'}" target="_blank" style="font-size: 2rem">
-                Mes images télécharger
+                Mes images téléchargées
               </router-link>
             </div>
           </div>

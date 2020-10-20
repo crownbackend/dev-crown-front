@@ -22,10 +22,10 @@
                   Blog
               </b-navbar-item>
               <b-navbar-item tag="router-link" :to="{ name: 'Technology' }">
-                  Technologie
+                  Technologies
               </b-navbar-item>
               <b-navbar-item tag="router-link" :to="{ name: 'Playlist' }">
-                  Playliste
+                  Playlists
               </b-navbar-item>
               <b-navbar-item tag="router-link" :to="{ name: 'forum' }">
                   Forum
@@ -38,7 +38,7 @@
               <b-navbar-dropdown :label="username" v-if="isLoggedIn">
                   <b-navbar-item href="#" v-if="username">
                       <router-link :to="{name: 'profile', params: {username: username}}">
-                        Mon profile
+                        Mon profil
                       </router-link>
                   </b-navbar-item>
                   <b-navbar-item tag="router-link" :to="{ name: 'contact' }">

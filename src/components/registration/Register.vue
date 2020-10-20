@@ -17,7 +17,7 @@
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control has-icons-left has-icons-right">
-                                <input class="input" type="email" placeholder="Un email de confirmation sera envoyer !" v-on:keyup="verifyEmail" v-model="email">
+                                <input class="input" type="email" placeholder="Un email de confirmation vous sera envoyé !" v-on:keyup="verifyEmail" v-model="email">
                                 <span class="icon is-small is-left">
                                   <i class="fas fa-envelope"></i>
                                 </span>
@@ -45,8 +45,8 @@
                         Pourquoi s'inscrire ?
                     </h1>
                     <p class="subtitle is-4">
-                        Créer votre compte pour ne raté aucune nouvelle vidéo,
-                        participer a la vie du site et créer de nouveau sujet dans le forum.
+                        Créer votre compte pour ne rater aucune nouvelle vidéo,
+                        participer a la vie du site et créer de nouveaux sujets dans le forum.
                     </p>
                 </div>
             </div>
@@ -56,8 +56,8 @@
                     Inscription réussie avec succès
                 </h1>
                 <p class="subtitle is-4">
-                    Un email de confirmation va vous être envoyer, veuillez cliquer dessu pour
-                    finir votre inscription !
+                    Un email de confirmation va vous sera envoyé, veuillez cliquer dessus pour
+                    finialiser votre inscription !
                 </p>
             </div>
         </div>
@@ -193,10 +193,10 @@
                     this.formValid = false
                     this.passwordGood = false
                     this.passwordMessageError = "le mot de passe doit contenir 8 caractères minimum,\n" +
-                        "1 chiffre minimum\n" +
-                        "1 lettre minimum\n" +
-                        "1 lettre majuscule\n" +
-                        "50 caractères maximum"
+                        "1 chiffre minimum,\n" +
+                        "1 lettre minimum,\n" +
+                        "1 lettre majuscule et peut contenir jusqu'a\n" +
+                        "50 caractères maximum."
                 }
             },
             validEmail: function (email) {
